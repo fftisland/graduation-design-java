@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>java</artifactId>
+    <groupId>graduation-design</groupId>
+    <version>1.0.0</version>
+  </parent>
+
+  <!--打包信息-->
+  <artifactId>base</artifactId>
+  <packaging>jar</packaging>
+  <name>base</name>
+  <version>1.0.0</version>
+
+  <dependencies>
+    <!--Spring核心依赖，IOC与DI的基本实现-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+    </dependency>
+    <!--Spring EL表达式，依赖core-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-expression</artifactId>
+    </dependency>
+    <!--Spring AOP，依赖 core beans aopalliance-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>aopalliance</groupId>
+      <artifactId>aopalliance</artifactId>
+    </dependency>
+    <!--Spring上下文，即IOC容器，依赖core beans aop expression-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+    <!--Spring Bean工厂与Bean的装配，依赖core-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+    </dependency>
+    <!--Spring Test功能，依赖core 这俩测试依赖默认不是compile的 所以如果想要让其他模块继承
+        要手动指定为compile范围的编译-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+    <!--slf4j-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+    </dependency>
+    <!--log4j-->
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+    </dependency>
+
+    <!--lombok-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+    <!--*******************************分割线，上面是Spring的基本依赖*******************************-->
+    <!--mybatis base模块中主要是使用别名-->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+    </dependency>
+  </dependencies>
+
+  <!--maven灵活构建-->
+  <profiles>
+    <!-- 开发环境 -->
+    <profile>
+      <id>dev</id> <!--设置了profile的id，也可以使用maven命令，-Pdev/test/online 直接指定运行哪个profile-->
+      <build>
+        <filters>
+          <filter>src/main/resources/env/dev/base.properties</filter>
+        </filters>
+        <resources>
+          <resource>  <!--build下的resource元素是为了手动指定打包文件的，顺便可以用来进行资源过滤-->
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+            <includes>
+              <include>*.properties</include>
+            </includes>
+          </resource>
+        </resources>
+      </build>
+      <activation>
+        <activeByDefault>true</activeByDefault><!-- 设定默认为开发环境 -->
+        <property>
+          <name>env</name>  <!--如果存在系统属性env，值为dev，则激活当前配置，运行maven命令时可使用 -Denv=dev/test/online来创建这个变量-->
+          <value>dev</value><!--还可以设置1、存在系统属性 2、存在文件 3、setting文件显示指定-->
+        </property>         <!--4、操作系统环境 等额外四中方式进行激活，也就是说一共六种灵活构建方式-->
+      </activation>
+    </profile>
+
+    <!-- 测试环境 -->
+    <profile>
+      <id>test</id>
+      <build>
+        <filters>
+          <filter>src/main/resources/env/test/base.properties</filter>
+        </filters>
+        <resources>
+          <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+            <includes>
+              <include>*.properties</include>
+            </includes>
+          </resource>
+        </resources>
+      </build>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>test</value>
+        </property>
+      </activation>
+    </profile>
+
+    <!-- 线上环境 -->
+    <profile>
+      <id>online</id>
+      <build>
+        <filters>
+          <filter>src/main/resources/env/online/base.properties</filter><!--类似于数据源，即从该目录下读取配置文件-->
+        </filters>
+        <resources>
+          <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering><!--启动filter-->
+            <includes>
+              <include>*.properties</include><!--用filter中读出的数据解析目标文件-->
+            </includes>
+          </resource>
+        </resources>
+      </build>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>online</value>
+        </property>
+      </activation>
+    </profile>
+  </profiles>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>*.xml</include>
+        </includes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>   <!--compile插件默认只支持编译java1.3-->
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.8</source>  <!--手动配置使其支持java1.8-->
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
