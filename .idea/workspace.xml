@@ -9,7 +9,9 @@
     <bookmark url="file://$PROJECT_DIR$/pom.xml" line="58" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3bf8a01-998b-43ff-95ed-a8f9b6942657" name="Default" comment="" />
+    <list default="true" id="f3bf8a01-998b-43ff-95ed-a8f9b6942657" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/springmvc/target/" />
@@ -761,7 +763,7 @@
       <workItem from="1520901037885" duration="24746000" />
       <workItem from="1520988096697" duration="17196000" />
       <workItem from="1521075126137" duration="20532000" />
-      <workItem from="1521200862478" duration="718000" />
+      <workItem from="1521200862478" duration="889000" />
     </task>
     <servers />
   </component>
@@ -798,7 +800,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134441000" />
+    <option name="totallyTimeSpent" value="134612000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
