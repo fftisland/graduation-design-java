@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="api" />
+        <module name="base" />
+        <module name="mapper" />
+        <module name="scheduler" />
+        <module name="service" />
+        <module name="springmvc" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api" target="1.8" />
+      <module name="base" target="1.8" />
+      <module name="graduation-design-java" target="1.8" />
+      <module name="mapper" target="1.8" />
+      <module name="scheduler" target="1.8" />
+      <module name="service" target="1.8" />
+      <module name="springmvc" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
