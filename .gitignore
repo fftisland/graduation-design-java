@@ -1,0 +1,17 @@
+base/base.iml
+springmvc/src/main/webapp/upload/
+springmvc/springmvc.iml
+/target/
+/.idea/
+/.svn/
+**/*.iml
+*.iml
+qa.sh
+*/bin/
+/bin/
+base/bin/
+springmvc/bin/
+.classpath
+.project
+.setting/*
+*/.setting/*
