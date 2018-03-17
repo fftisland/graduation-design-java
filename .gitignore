@@ -16,3 +16,4 @@ springmvc/bin/
 .setting/*
 */.setting/*
 *.jar
+*.war
