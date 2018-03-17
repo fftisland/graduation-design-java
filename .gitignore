@@ -1,7 +1,7 @@
 base/base.iml
 springmvc/src/main/webapp/upload/
 springmvc/springmvc.iml
-/target/
+**/target/**
 /.idea/
 /.svn/
 **/*.iml
