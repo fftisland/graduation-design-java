@@ -36,7 +36,17 @@
       <artifactId>mapper</artifactId>
       <version>1.0.0</version>
     </dependency>
+    <!--spring security-->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+    </dependency>
   </dependencies>
+
   <!--maven灵活构建-->
   <profiles>
     <!-- 开发环境 -->

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--由于要在security的配置文件中使用bean，所以要使用b名称空间-->
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd">
+  <!--一个http元素可以理解为一个访问控制模块-->
+  <http auto-config="true">
+    <!--一个intercept-url就定义了一个权限访问的规则，pattern为路径映射，access定义了有权限访问该URL的角色-->
+    <intercept-url pattern="/**" access="ROLE_USER,ROLE_ADMIN"/>
+  </http>
+
+  <!--有了访问规则，接下来需要的就是验证方案-->
+  <authentication-manager>
+    <authentication-provider>
+      <user-service>
+        <user name="user" password="user" authorities="ROLE_USER" />
+        <user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN" />
+      </user-service>
+    </authentication-provider>
+  </authentication-manager>
+</b:beans>

@@ -9,6 +9,10 @@
            http://www.springframework.org/schema/context/spring-context-4.0.xsd">
   <!--导入这个配置，这样就可以在SpirngMVC的ContextLoaderListener中进行加载 而且这一步是必需的-->
   <import resource="classpath:service-spring-config.xml"></import>
+
+  <!--spring-security-->
+  <import resource="classpath:spring-security-config.xml"></import>
+
   <!--包扫描-->
   <context:component-scan base-package="ZzzAhu163.springmvc"></context:component-scan>
 
