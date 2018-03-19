@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--由于要在security的配置文件中使用bean，所以要使用b名称空间-->
 <b:beans xmlns="http://www.springframework.org/schema/security"
          xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd">
-  <!--一个http元素可以理解为一个访问控制模块-->
-  <http auto-config="true">
-    <!--一个intercept-url就定义了一个权限访问的规则，pattern为路径映射，access定义了有权限访问该URL的角色-->
-    <intercept-url pattern="/**" access="ROLE_USER,ROLE_ADMIN"/>
+
+  <http auto-config="true" use-expressions="false">
+    <form-login login-page="/index.jsp"
+                login-processing-url="/login.do"
+                username-parameter="username"
+                password-parameter="password"
+                authentication-success-forward-url="success.jsp"
+                authentication-failure-forward-url="fail.jsp"
+    />
+    <!-- 表示匿名用户可以访问 -->
+    <intercept-url pattern="/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+    <intercept-url pattern="/**" access="ROLE_USER" />
+
+    <!--
+         当你配置了自定义的拦截器的时候，而且我拦截的请求是存放在数据库中的，所有当我输入一个请求URL时
+         它会去getAttributes 然后把这个请求和数据库中的资源进行匹配 当匹配成功时 发现用户没有登录
+         然后就跳转到登录页面(个人理解)如果请求的是一个非数据库存储的URL那么就完全找不到这个请求 404-->
+    <custom-filter ref="myFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+    <!-- 禁用csrf机制-->
+    <csrf disabled="true"/>
+
   </http>
 
-  <!--有了访问规则，接下来需要的就是验证方案-->
-  <authentication-manager>
-    <authentication-provider>
-      <user-service>
-        <user name="user" password="user" authorities="ROLE_USER" />
-        <user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN" />
-      </user-service>
+  <!--认证管理器 实现用户进行登录鉴定的类 主要实现UserDetailsService接口即可-->
+  <authentication-manager alias="authenticationManager">
+    <authentication-provider
+            user-service-ref="myUserDetailsService">
     </authentication-provider>
   </authentication-manager>
+  <!--自定义的 UserDetailsService -->
+  <bean id="myUserDetailsService" class="Index.MyUserDetailsService">
 </b:beans>

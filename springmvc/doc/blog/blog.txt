@@ -133,3 +133,6 @@ https://segmentfault.com/a/1190000013561054?hmsr=toutiao.io&utm_medium=toutiao.i
 
 git忽略文件:
 http://963630220-qq-com.iteye.com/blog/2018303
+
+负数补码，原码，无符号右移：
+http://blog.csdn.net/king_msky/article/details/17221973
