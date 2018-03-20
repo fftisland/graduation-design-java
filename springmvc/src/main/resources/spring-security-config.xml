@@ -9,8 +9,27 @@
 
 <!-- 不需要进行安全认证的资源 -->
   <http pattern="/resources/**" security="none" />
-  <!-- 资源所需要的权限 -->
+
   <http use-expressions="true" auto-config="true">
+    <!--定义登录表单信息-->
+    <form-login login-page="登录页面的路由" login-processing-url="表单提交的url"
+                username-parameter="表单中用户名字段" password-parameter="表单中密码字段"
+    >
+      <!--还可以给form-login添加登录成功和失败后重定向到某个URL的属性:
+      场景1:当用户没有直接访问登录页，被框架引导到登录页，成功登录后返回的应该是原目标页，那么如果他直接访问登录页呢，
+      登录后的跳转页面就可以使用default-target-url指定。如果我就想强制指定登录后跳转页面，无论原路径如何，
+      那么可以通过always-use-default-target属性来指定
+      场景2:用户登录失败，通过设置authentication-failure-url属性来指定失败后定向到的url
+      -->
+
+      <!--既然有登录认证，那就存在成功和失败两种结果:
+       场景1:自定义实现了AuthenticationSuccessHandler接口的类，注册到form-login的authentication-success-handler-ref属性，
+       登录成功后会调用onAuthenticationSuccess(request,response,authentication)
+       需要注意的是，如果定义了处理handler，那么之前定义的所有target-url都将失去作用
+       场景2:自定义实现了继承失败handler的类，注册到authentication-failure-handler-ref属性中balabalabala...
+      -->
+    </form-login>
+
     <intercept-url pattern="/index.jsp*" access="permitAll" />
     <intercept-url pattern="/user.jsp*" access="hasRole('ROLE_USER')" />
     <intercept-url pattern="/admin.jsp*" access="hasRole('ROLE_ADMIN')" />
