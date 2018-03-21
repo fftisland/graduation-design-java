@@ -19,7 +19,6 @@
     <!-- 载入配置的属性 -->
     <bean id="mvcPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="ignoreUnresolvablePlaceholders" value="true" />
-        <property name="order" value="1"></property>
         <property name="location">
             <value>classpath:mvc.properties</value>
         </property>

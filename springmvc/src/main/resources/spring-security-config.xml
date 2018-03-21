@@ -41,7 +41,7 @@
     </authentication-provider>
   </authentication-manager>
 
-  <b:bean class="provider" id="ZzzAhu163.service.security.MyAuthenticationProvider">
+  <b:bean class="ZzzAhu163.service.security.MyAuthenticationProvider" id="provider">
   </b:bean>
 
   <b:bean id="myUserDetailService" class="ZzzAhu163.service.security.MyUserDetailService">
