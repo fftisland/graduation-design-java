@@ -1,6 +1,9 @@
 package ZzzAhu163.base.user;
 
+import ZzzAhu163.base.baseObject.BaseObject;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,22 +17,11 @@ import javax.lang.model.element.NestingKind;
 @Data
 @Slf4j
 @Alias("AuthorityRole")
-public class AuthorityRole implements GrantedAuthority {
-    private int id;
-    private String description;
-    private String authorityName;
-
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class AuthorityRole  extends BaseObject implements GrantedAuthority{
     @Override
     public String getAuthority() {
-        return authorityName;
-    }
-
-    public void reset() {
-        id = -1;
-        description = authorityName = null;
-    }
-
-    public AuthorityRole() {
-        reset();
+        return getName();
     }
 }

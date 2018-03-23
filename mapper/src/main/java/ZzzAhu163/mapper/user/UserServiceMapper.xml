@@ -4,4 +4,76 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ZzzAhu163.mapper.user.UserServiceMapper">
 
+  <resultMap id="userResult" type="User">
+    <id column="id" property="id"/>
+    <result column="" property=""/>
+    <result column="" property=""/>
+    <result column="" property=""/>
+    <result column="" property=""/>
+    <result column="" property=""/>
+    <result column="" property=""/>
+    <result column="" property=""/>
+  </resultMap>
+
+  <sql id="userColumns">
+    ${alias}.id, ${alias}.user_name, ${alias}.email, ${alias}.user_role,
+    ${alias}.login_count, ${alias}.last_login_time, ${alias}.create_time,
+    ${alias}.update_time, ${alias}.password
+  </sql>
+
+  <sql id="userCondition">
+    <where>
+      <if test="user != null">
+        <if test="id > 0">
+          AND ${alias}.id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+          AND ${alias}.user_name = #{name}
+        </if>
+        <if test="user.password != null and user.password != ''">
+          AND ${alias}.password = #{user.password}
+        </if>
+        <if test="user.email != null and user.email != ''">
+          AND ${alias}.email = #{email}
+        </if>
+        <if test="user.loginCount >= 0">
+          AND ${alias}.login_count = #{user.loginCount}
+        </if>
+        <if test="startTime > 0">
+          AND unix_timestatmp(${alias}.create_time) >= #{startTime}
+        </if>
+        <if test="entTime > 0">
+          AND unix_timestamp(${alias}.create_time) <![CDATA[ <= ]]> #{endTime}
+        </if>
+      </if>
+    </where>
+  </sql>
+
+
+  <!--add-->
+  <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO user_list (user_name, password, email, create_time)
+    last_login_time, create_time, update_time)
+    VALUES
+    (#{name}, #{password}, #{email}, now())
+  </insert>
+
+  <!--delete-->
+   <delete id="deleteUserById">
+     DELETE FROM user_list WHERE id = #{id}
+   </delete>
+
+  <!--update-->
+
+
+  <!--query list count-->
+  <select id="queryUserListCount">
+    SELECT COUNT(1) FROM user_list t
+    <include refid="userCondition">
+      <property name="alias" value="t"></property>
+    </include>
+  </select>
+
+  <!--query list-->
+
 </mapper>

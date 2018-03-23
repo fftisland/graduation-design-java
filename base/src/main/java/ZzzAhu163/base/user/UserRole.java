@@ -15,8 +15,9 @@ import org.springframework.util.StringUtils;
 @Alias("UserRole")
 @ToString
 public enum UserRole {
-    UNKNOWN(-1, "UNKNOWN", "未知用户"),
-    ROLE_NORMAL(0, "ROLE_NORMAL", "正常用户");
+    UNKNOWN(-1, "UNKNOWN", "未知角色，表不参与索引"),
+    ROLE_NORMAL(0, "ROLE_NORMAL", "正常用户，享受组权限"),
+    ROLE_ADMIN(1, "ROLE_ADMIN", "管理员用户，除了享受组权限以外，还可以被赋予个人权限");
 
     UserRole(int code, String name, String description) {
         this.code = code;

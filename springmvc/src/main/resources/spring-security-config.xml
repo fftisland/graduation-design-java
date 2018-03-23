@@ -26,9 +26,7 @@
      场景2:自定义实现了继承失败handler的类，注册到authentication-failure-handler-ref属性中balabalabala...
     -->
     <form-login login-page="index.jsp" login-processing-url="login.do"
-                username-parameter="username" password-parameter="password">
-
-    </form-login>
+                username-parameter="username" password-parameter="password"/>
 
     <intercept-url pattern="/index.jsp*" access="permitAll" />
     <intercept-url pattern="/user.jsp*" access="hasRole('ROLE_USER')" />
@@ -42,6 +40,7 @@
   </authentication-manager>
 
   <b:bean class="ZzzAhu163.service.security.MyAuthenticationProvider" id="provider">
+    <b:property name="myUserDetailService" ref="myUserDetailService"></b:property>
   </b:bean>
 
   <b:bean id="myUserDetailService" class="ZzzAhu163.service.security.MyUserDetailService">

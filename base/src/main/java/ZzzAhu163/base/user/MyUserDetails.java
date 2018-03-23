@@ -14,6 +14,7 @@ import java.util.Collection;
 public class MyUserDetails implements UserDetails {
     private User user;
 
+    // <? extends E> 上限通配符，泛型中元素只能是GrantedAuthority的子类或者它本身
     public MyUserDetails(User user, Collection<? extends  GrantedAuthority> authorities) {
       this.user = user;
       this.authorities = authorities;

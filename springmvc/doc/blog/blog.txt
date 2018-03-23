@@ -136,3 +136,6 @@ http://963630220-qq-com.iteye.com/blog/2018303
 
 负数补码，原码，无符号右移：
 http://blog.csdn.net/king_msky/article/details/17221973
+
+lombok的基本使用方法:
+https://www.cnblogs.com/ywqbj/p/5711691.html

@@ -1,6 +1,7 @@
 package ZzzAhu163.service.security;
 
 import com.alibaba.druid.util.StringUtils;
+import lombok.Data;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,12 +12,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.annotation.Resource;
 
+
 /**
  * @author ZzzAhu163
  * 自定义的Provider
  **/
+@Data
 public class MyAuthenticationProvider implements AuthenticationProvider {
-  @Resource
   private MyUserDetailService myUserDetailService;
 
   /**
@@ -32,15 +34,17 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
       throw new UsernameNotFoundException("没有找到用户名为{" + token.getName() + "}的用户");
     }
     if (!StringUtils.equals(userDetails.getPassword(), token.getCredentials().toString())) {
-      throw new BadCredentialsException("用户{" + token.getName() + "} 密码输入错误{" + token.getCredentials().toString() + "}")
+      throw new BadCredentialsException("用户{" + token.getName() + "} 密码输入错误{" + token.getCredentials().toString() + "}");
     }
 
+    //认证后的Token中包含了用户名，密码， 所含的权限
+    //当遇到URL的时候，拦截器将会从Security中取出UsernamePasswordAuthenticationToken进行用户所含权限和URL限定权限进行对比
     return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
   }
 
 
   /**
-   * 认证提供类型
+   * 认证提供类型，主要是让SpringSecurity框架知道你使用了哪个默认实现类
    **/
   @Override
   public boolean supports(Class<?> aClass) {
