@@ -1,6 +1,7 @@
 package ZzzAhu163.base.user;
 
 import ZzzAhu163.base.baseObject.BaseObject;
+import ZzzAhu163.base.baseObject.IsBuildIn;
 import lombok.Data;
 import lombok.ToString;
 import org.apache.ibatis.type.Alias;
@@ -17,7 +18,7 @@ public class UserGroup extends BaseObject{
   private UserGroupType userGroupType;
 
   //1表示内置 0表示添加 -1表示忽略
-  private int buildIn;
+  private IsBuildIn isBuildIn;
 
   //用户组权限列表
   private List<AuthorityRole> authorities;
@@ -31,6 +32,6 @@ public class UserGroup extends BaseObject{
   public void reset() {
     this.userGroupType = null;
     this.authorities = null;
-    this.buildIn = -1;
+    this.isBuildIn = null;
   }
 }

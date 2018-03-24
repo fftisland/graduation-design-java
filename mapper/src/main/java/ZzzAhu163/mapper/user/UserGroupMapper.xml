@@ -28,28 +28,32 @@
       </if>
       <if test="userGroup != null">
         <if test="userGroup.userGroupType != null">
-          AND
+          AND ${alias}.user_group_type = #{userGroup.userGroupType, typeHandler=ZzzAhu163.mapper.user.typehandler.GroupTypeHandler}
         </if>
-        <if test="userGroup.isBuildIn > -1">
-          AND
+        <if test="userGroup.isBuildIn != null">
+          AND ${alias}.is_build_in = #{userGroup.isBuildIn, typeHandler=ZzzAhu163.base.baseObject.IsBuildIn}
         </if>
       </if>
     </where>
   </sql>
 
-
-  <!--query id list count-->
-  <select id="queryUserGroupIdListCount">
-    SELECT count(1) FROM user_usergroup_map WHERE
-    user_id = #{userID}
+  <!--query list count-->
+  <select id="queryUserGroupListCount">
+    SELECT count(1) FROM user_group_list t
+    <include refid="queryCondition">
+      <property name="alias" value="t"/>
+    </include>
   </select>
 
-  <!--query id list-->
-  <select id="queryUserGroupIdList" resultType="int">
-    SELECT usergroup_id FROM user_usergroup_map WHERE
-    user_id = #{userId}
+  <!--query list-->
+  <select id="queryUserGrouoList" resultMap="">
+    SELECT
+    <include refid="queryColumns">
+      <property name="alias" value="t"/>
+    </include>
+    FROM user_group_list t
+    <include refid="queryCondition">
+      <property name="alias" value="t"/>
+    </include>
   </select>
-
-  <!--query UserGroup list-->
-
 </mapper>
