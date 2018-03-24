@@ -1,11 +1,10 @@
 package ZzzAhu163.base.user;
 
-
 import ZzzAhu163.base.baseObject.BaseObject;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
-
+import org.springframework.util.CollectionUtils;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +33,10 @@ public class User extends BaseObject{
 
     private List<UserGroup> userGroups;
 
-    //用户权限角色，由我们自己使用
+    //个人权限
     private List<AuthorityRole> authorityRoles;
 
-    //单纯的用户权限，是提供给Security框架使用的
+    //merge 个人权限+组权限
     private List<GrantedAuthority> authorities;
 
     public User() {
@@ -58,5 +57,20 @@ public class User extends BaseObject{
       this.updateTime = null;
       this.userGroups = new ArrayList<>();
       this.authorities = new ArrayList<>();
+    }
+
+    public void mergeAuthorities() throws Exception {
+        if (CollectionUtils.isEmpty(userGroups)) {
+            throw new Exception("user has not join any group");
+        }
+        if (userRole.equals(UserRole.UNKNOWN)) {
+            //1、未知身份，没有权限
+            userGroups = null;
+        } else if (userRole.equals(UserRole.ROLE_NORMAL)) {
+            //2、普通用户，只有组权限
+
+        } else if (userRole.equals(UserRole.ROLE_ADMIN)) {
+            //3、管理员，既有组权限，又有个人权限
+        }
     }
 }

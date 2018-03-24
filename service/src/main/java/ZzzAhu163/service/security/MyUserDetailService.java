@@ -3,6 +3,7 @@ package ZzzAhu163.service.security;
 import ZzzAhu163.base.user.MyUserDetails;
 import ZzzAhu163.base.user.User;
 import ZzzAhu163.base.user.UserRole;
+import ZzzAhu163.base.user.filter.UserQueryFilter;
 import ZzzAhu163.service.user.UserService;
 import com.mysql.jdbc.authentication.MysqlClearPasswordPlugin;
 import lombok.Data;
@@ -30,11 +31,16 @@ public class MyUserDetailService implements UserDetailsService {
     /*自定义loadUserByUsername方法，根据用户名获取UserDetails，主要是为了获取权限*/
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User user = new User();
-        user.setName("ZzzAhu163");
-        user.setPassword("ZzzAhu163");
-        user.setUserRole(UserRole.ROLE_NORMAL);
-        //要把权限转成Collection<GrantedAuthority>的形式才能够给SpringSecurity直接使用 UserDetails.getAuthorities()
+        UserQueryFilter filter = new UserQueryFilter();
+        filter.setName(name);
+        User user = userService.queryUser(filter);
+        if (user == null) {
+            return null;
+        }
+        //填充User的
+
+        //要把权限转成Collection<GrantedAuthority>的形式才能够给SpringSecurity直接使用
+        // UserDetails.getAuthorities()
         return new MyUserDetails(user, getAuthorities(user));
     }
 
@@ -42,8 +48,9 @@ public class MyUserDetailService implements UserDetailsService {
   private Collection<GrantedAuthority> getAuthorities(User user) {
     Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
     //TODO：根据user，结合Role和group，获取用户拥有的权限信息，这里目前先直接指定一个ROLE_ADMIN
-    SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
-    grantedAuthorities.add(grantedAuthority);
+    //1、查询User的所有Group
+    //2、根据User的Role进行聚合
+    //3、拆分成两种权限，赋值给User
     return grantedAuthorities;
   }
 }

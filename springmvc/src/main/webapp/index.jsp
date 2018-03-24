@@ -8,6 +8,12 @@
   <title>Insert title here</title>
 </head>
 <body>
-<div>这是任何人都可以访问的页面</div>
+<div>
+  <!--表单会被SpringSecurity拦截，进入manager-->
+  <form action="login.do">
+    用户名：<input type="text" name="username" id="username"/><br/>
+    密  码：<<input type="text" name="password" id="password">
+  </form>
+</div>
 </body>
 </html>
