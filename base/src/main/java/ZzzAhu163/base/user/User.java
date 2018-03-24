@@ -50,7 +50,7 @@ public class User extends BaseObject {
   public void reset() {
     this.email = null;
     this.password = null;
-    this.userRole = UserRole.UNKNOWN;
+    this.userRole = null;
     this.loginCount = 0;
     this.lastLoginTime = null;
     this.createTime = null;

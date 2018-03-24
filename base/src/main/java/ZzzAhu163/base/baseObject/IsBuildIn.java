@@ -16,6 +16,7 @@ import org.hamcrest.core.Is;
 @AllArgsConstructor
 @Getter
 public enum IsBuildIn {
+  UNKNOWN(-1, "未知类型", "防止出现枚举类型为空的情况"),
   BUILD_IN(0, "内置类型", "从开始就存在的，不是由用户添加的"),
   NOT_BUILD_IN(1, "非内置类型", "某些情况下动态生成的");
 
@@ -25,14 +26,14 @@ public enum IsBuildIn {
 
   public static IsBuildIn getIsBuildInById(int code) {
     if (code < 0) {
-      return null;
+      return IsBuildIn.UNKNOWN;
     }
     for (IsBuildIn isBuildIn : IsBuildIn.values()) {
       if (isBuildIn.getCode() == code) {
         return isBuildIn;
       }
     }
-    return null;
+    return IsBuildIn.UNKNOWN;
   }
 
   public static IsBuildIn getIsBuildInByName(@NonNull String name) {
@@ -41,6 +42,6 @@ public enum IsBuildIn {
     } catch (Exception e) {
       log.error("getIsBuildInByName failed {}", e.toString());
     }
-    return null;
+    return IsBuildIn.UNKNOWN;
   }
 }

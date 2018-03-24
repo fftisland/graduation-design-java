@@ -33,11 +33,10 @@ public class MyUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         UserQueryFilter filter = new UserQueryFilter();
         filter.setName(name);
-        User user = userService.queryUser(filter);
+        User user = userService.queryUser(filter); //queryUser中已经聚合了用户组等相关信息
         if (user == null) {
             return null;
         }
-        //填充User的
 
         //要把权限转成Collection<GrantedAuthority>的形式才能够给SpringSecurity直接使用
         // UserDetails.getAuthorities()

@@ -5,7 +5,7 @@
 <mapper namespace="ZzzAhu163.mapper.firstmapper.FirstMapper">
 
   <sql id="queryColumns">
-    ${alias}.id,${alias}.name,${alias}.user_group_type,${alias}.is_build_id,
+    ${alias}.id,${alias}.name,${alias}.user_group_type,${alias}.is_build_in,
     ${alias}.description,${alias}.create_time
   </sql>
 

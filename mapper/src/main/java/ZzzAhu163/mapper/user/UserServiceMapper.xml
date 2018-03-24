@@ -90,4 +90,9 @@
       <property name="alias" value="t"></property>
     </include>
   </select>
+
+  <!--queryUserGroupIdListById-->
+  <select id="queryUserGroupIdListById" resultType="int">
+    SELECT user_group_id FROM user_usergroup_map WHERE  user_id = #{userId}
+  </select>
 </mapper>

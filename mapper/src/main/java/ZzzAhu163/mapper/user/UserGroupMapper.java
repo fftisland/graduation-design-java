@@ -13,12 +13,10 @@ import java.util.List;
  **/
 public interface UserGroupMapper extends BaseMapper {
   //query list count
-  int queryUserGroupListIdCount(UserGroupQueryFilter filter);
+  int queryUserGroupListCount(UserGroupQueryFilter filter);
 
   //query list
-  List<User> queryUserGroupIdList(UserQueryFilter filter);
-
-
+  List<UserGroup> queryUserGroupList(UserGroupQueryFilter filter);
 
   //insert
   int insertUserGroup(UserGroup userGroup);

@@ -30,4 +30,7 @@ public interface UserServiceMapper extends BaseMapper {
 
   //query userGroup List
   List<UserGroup> queryUserGroupList(int id);
+
+  //query user group id list
+  List<Integer> queryUserGroupIdListById(int userId);
 }

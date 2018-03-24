@@ -2,6 +2,7 @@ package ZzzAhu163.service.user;
 
 import ZzzAhu163.base.user.User;
 import ZzzAhu163.base.user.filter.UserQueryFilter;
+import ZzzAhu163.mapper.user.UserGroupMapper;
 import ZzzAhu163.mapper.user.UserServiceMapper;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,14 @@ public class UserServiceImpl implements UserService {
         if (users == null) {
             return null;
         }
-        return users.get(0);
+        //填充UserGroup
+        User user = users.get(0);
+        List<Integer> idList = queryUserGroupIdListById(user.getId());
+        for (Integer id : idList) {
+            //TODO:构造完整的UserGroup
+        }
+
+        return user;
     }
 
     @Override
@@ -46,5 +54,10 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         return user;
+    }
+
+    @Override
+    public List<Integer> queryUserGroupIdListById(int userId) {
+        return userServiceMapper.queryUserGroupIdListById(userId);
     }
 }

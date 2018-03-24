@@ -17,7 +17,7 @@ import java.util.List;
 public class UserGroup extends BaseObject{
   private UserGroupType userGroupType;
 
-  //1表示内置 0表示添加 -1表示忽略
+  //1表示内置 0表示添加 null表示忽略
   private IsBuildIn isBuildIn;
 
   //用户组权限列表

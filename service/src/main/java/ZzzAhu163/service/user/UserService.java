@@ -2,6 +2,7 @@ package ZzzAhu163.service.user;
 
 import ZzzAhu163.base.user.User;
 import ZzzAhu163.base.user.filter.UserQueryFilter;
+import org.omg.PortableInterceptor.INACTIVE;
 
 import java.util.List;
 
@@ -20,4 +21,7 @@ public interface UserService {
 
     //query all user info
     User queryUserAll(UserQueryFilter filter);
+
+    //queryUserGroupIdListById
+    List<Integer> queryUserGroupIdListById(int userId);
 }
