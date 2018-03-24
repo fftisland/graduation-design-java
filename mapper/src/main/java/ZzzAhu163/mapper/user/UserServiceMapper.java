@@ -1,6 +1,7 @@
 package ZzzAhu163.mapper.user;
 import ZzzAhu163.BaseMapper;
 import ZzzAhu163.base.user.User;
+import ZzzAhu163.base.user.UserGroup;
 import ZzzAhu163.base.user.filter.UserQueryFilter;
 
 import java.util.List;
@@ -23,4 +24,10 @@ public interface UserServiceMapper extends BaseMapper {
 
   //query list
   List<User> queryUserList(UserQueryFilter filter);
+
+  //query userGroup list count
+  int queryUserGroupListCount(int id);
+
+  //query userGroup List
+  List<UserGroup> queryUserGroupList(int id);
 }

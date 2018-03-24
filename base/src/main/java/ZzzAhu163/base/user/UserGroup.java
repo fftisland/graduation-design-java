@@ -16,18 +16,21 @@ import java.util.List;
 public class UserGroup extends BaseObject{
   private UserGroupType userGroupType;
 
-  private boolean buildIn;
+  //1表示内置 0表示添加 -1表示忽略
+  private int buildIn;
 
   //用户组权限列表
   private List<AuthorityRole> authorities;
+
+  public UserGroup(){}
 
   public UserGroup(int id) {
     super(id);
   }
 
   public void reset() {
-    this.userGroupType = UserGroupType.GROUP_USER;
+    this.userGroupType = null;
     this.authorities = null;
-    this.buildIn = false;
+    this.buildIn = -1;
   }
 }

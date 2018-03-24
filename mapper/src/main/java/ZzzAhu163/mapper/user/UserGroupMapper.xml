@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ZzzAhu163.mapper.firstmapper.FirstMapper">
+
+  <sql id="queryColumns">
+    ${alias}.id,${alias}.name,${alias}.user_group_type,${alias}.is_build_id,
+    ${alias}.description,${alias}.create_time
+  </sql>
+
+  <sql id="queryCondition">
+    <where>
+      <if test="id > 0">
+        AND ${alias}.id = #{id}
+      </if>
+      <if test="name != null and name != ''">
+        AND ${alias}.name = #{name}
+      </if>
+      <if test="keyWords != null and keyWords != ''">
+        AND ${alias}.description like contact('%', #{keyWords}, '%')
+      </if>
+      <if test="startTime > 0">
+        AND unix_timestamp(${alias}.create_time) >= #{startTime}
+      </if>
+      <if test="endTime > 0">
+        AND unxi_timestamp(${alias}.create_time) <![CDATA[ <= ]]> #{endTime}
+      </if>
+      <if test="userGroup != null">
+        <if test="userGroup.userGroupType != null">
+          AND
+        </if>
+        <if test="userGroup.isBuildIn > -1">
+          AND
+        </if>
+      </if>
+    </where>
+  </sql>
+
+
+  <!--query id list count-->
+  <select id="queryUserGroupIdListCount">
+    SELECT count(1) FROM user_usergroup_map WHERE
+    user_id = #{userID}
+  </select>
+
+  <!--query id list-->
+  <select id="queryUserGroupIdList" resultType="int">
+    SELECT usergroup_id FROM user_usergroup_map WHERE
+    user_id = #{userId}
+  </select>
+
+  <!--query UserGroup list-->
+
+</mapper>

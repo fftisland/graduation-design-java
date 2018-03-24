@@ -27,7 +27,7 @@ public class UserQueryFilter extends BaseQueryFilter {
   }
 
   public void reset() {
-    user = new User();
+    user = null;
   }
 
   //如果有相同属性，尽量以filter中的为准

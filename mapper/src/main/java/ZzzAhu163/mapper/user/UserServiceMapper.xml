@@ -6,13 +6,14 @@
 
   <resultMap id="userResult" type="User">
     <id column="id" property="id"/>
-    <result column="" property=""/>
-    <result column="" property=""/>
-    <result column="" property=""/>
-    <result column="" property=""/>
-    <result column="" property=""/>
-    <result column="" property=""/>
-    <result column="" property=""/>
+    <result column="user_name" property="name"/>
+    <result column="password" property="password"/>
+    <result column="email" property="email"/>
+    <result column="user_role" property="userRole" typeHandler="ZzzAhu163.mapper.user.typehandler.UserRoleHandler"/>
+    <result column="login_count" property="loginCount"/>
+    <result column="last_login_time" property="lastLoginTime"/>
+    <result column="create_time" property="createTime"/>
+    <result column="update_time" property="updateTime"/>
   </resultMap>
 
   <sql id="userColumns">
@@ -36,6 +37,9 @@
         <if test="user.email != null and user.email != ''">
           AND ${alias}.email = #{email}
         </if>
+        <if test="user.userRole != null">
+          AND ${alias}.user_role = #{user.userRole, typeHandler=ZzzAhu163.mapper.user.typehandler.UserRoleHandler}
+        </if>
         <if test="user.loginCount >= 0">
           AND ${alias}.login_count = #{user.loginCount}
         </if>
@@ -52,10 +56,11 @@
 
   <!--add-->
   <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO user_list (user_name, password, email, create_time)
-    last_login_time, create_time, update_time)
+    INSERT INTO user_list (user_name, password, email,
+    create_time, update_time, user_role, login_count)
     VALUES
-    (#{name}, #{password}, #{email}, now())
+    (#{name}, #{password}, #{email}, now(), now(),
+     #{userRole, typeHandler=ZzzAhu163.mapper.user.typehandler.UserRoleHandler}, #{loginCount})
   </insert>
 
   <!--delete-->
@@ -75,5 +80,14 @@
   </select>
 
   <!--query list-->
-
+  <select id="queryUserListCount">
+    SELECT
+    <include refid="userColumns">
+      <property name="alias" value="t"></property>
+    </include>
+    FROM user_list t
+    <include refid="userCondition">
+      <property name="alias" value="t"></property>
+    </include>
+  </select>
 </mapper>
