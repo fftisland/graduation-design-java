@@ -2,6 +2,8 @@ package ZzzAhu163.service.security;
 
 import com.alibaba.druid.util.StringUtils;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +20,9 @@ import javax.annotation.Resource;
  * 自定义的Provider
  **/
 @Data
+@Slf4j
 public class MyAuthenticationProvider implements AuthenticationProvider {
+  @Resource
   private MyUserDetailService myUserDetailService;
 
   /**
@@ -27,7 +31,9 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
    **/
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    log.info("执行provider的authenticate方法");
     UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
+    log.info("获得UsernamePasswordAuthenticationToken {}", token);
     UserDetails userDetails = myUserDetailService.loadUserByUsername(token.getName());
     /**注意下面两个异常千万别自己处理，否则Security框架将截获不到验证结果**/
     if (null == userDetails) {
@@ -41,7 +47,6 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     //当遇到URL的时候，拦截器将会从Security中取出UsernamePasswordAuthenticationToken进行用户所含权限和URL限定权限进行对比
     return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
   }
-
 
   /**
    * 认证提供类型，主要是让SpringSecurity框架知道你使用了哪个默认实现类

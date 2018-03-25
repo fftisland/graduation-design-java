@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ZzzAhu163.mapper.user.UserServiceMapper">
 
-  <resultMap id="userResult" type="User">
+  <resultMap id="UserMap" type="User">
     <id column="id" property="id"/>
     <result column="user_name" property="name"/>
     <result column="password" property="password"/>
@@ -72,7 +72,7 @@
 
 
   <!--query list count-->
-  <select id="queryUserListCount">
+  <select id="queryUserListCount" resultType="int">
     SELECT COUNT(1) FROM user_list t
     <include refid="userCondition">
       <property name="alias" value="t"></property>
@@ -80,7 +80,7 @@
   </select>
 
   <!--query list-->
-  <select id="queryUserListCount">
+  <select id="queryUserList" resultMap="UserMap">
     SELECT
     <include refid="userColumns">
       <property name="alias" value="t"></property>

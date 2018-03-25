@@ -10,9 +10,11 @@
 <body>
 <div>
   <!--表单会被SpringSecurity拦截，进入manager-->
-  <form action="login.do">
-    用户名：<input type="text" name="username" id="username"/><br/>
-    密  码：<<input type="text" name="password" id="password">
+  <!--必须要使用post提交表单的方式-->
+  <form action="login" method="post">
+    用户名：<input type="text" name="username" /><br/>
+    密  码：<input type="text" name="password" /><br/>
+    <button type="submit">登录</button>
   </form>
 </div>
 </body>

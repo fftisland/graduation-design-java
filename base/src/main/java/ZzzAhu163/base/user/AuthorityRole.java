@@ -9,6 +9,7 @@ import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.lang.model.element.NestingKind;
+import java.sql.Timestamp;
 
 /**
  * @author Zzz_Ahu_163
@@ -20,8 +21,18 @@ import javax.lang.model.element.NestingKind;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class AuthorityRole  extends BaseObject implements GrantedAuthority{
+    public AuthorityRole() {
+      super();
+    }
+
+    private Timestamp createTime;
+
     @Override
     public String getAuthority() {
         return getName();
+    }
+
+    public void reset() {
+      this.createTime = null;
     }
 }

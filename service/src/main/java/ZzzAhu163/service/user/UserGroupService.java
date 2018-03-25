@@ -28,4 +28,7 @@ public interface UserGroupService {
 
     //query simple UserGroup
     UserGroup querySimpleUserGroup(UserGroupQueryFilter filter);
+
+    //query userGroup list
+    List<UserGroup> queryUserGroupList(List<Integer> idList);
 }

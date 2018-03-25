@@ -2,12 +2,21 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ZzzAhu163.mapper.firstmapper.FirstMapper">
+<mapper namespace="ZzzAhu163.mapper.user.UserGroupMapper">
 
   <sql id="queryColumns">
     ${alias}.id,${alias}.name,${alias}.user_group_type,${alias}.is_build_in,
     ${alias}.description,${alias}.create_time
   </sql>
+
+  <resultMap id="UserGroupMap" type="UserGroup">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="userGroupType" column="user_group_type" typeHandler="ZzzAhu163.mapper.user.typehandler.GroupTypeHandler"/>
+    <result property="isBuildIn" column="is_build_in" typeHandler="ZzzAhu163.base.baseObject.typeHandler.IsBuildInHandler"/>
+    <result property="description" column="description"/>
+    <result property="createTime" column="create_time"/>
+  </resultMap>
 
   <sql id="queryCondition">
     <where>
@@ -46,7 +55,7 @@
   </select>
 
   <!--query list-->
-  <select id="queryUserGrouoList" resultMap="">
+  <select id="queryUserGrouoList" resultMap="UserGroupMap">
     SELECT
     <include refid="queryColumns">
       <property name="alias" value="t"/>
@@ -55,5 +64,17 @@
     <include refid="queryCondition">
       <property name="alias" value="t"/>
     </include>
+  </select>
+
+  <!--querySimpleUserGroupList-->
+  <select id="querySimpleUserGroupList" resultMap="UserGroupMap">
+    SELECT
+    <include refid="queryColumns">
+      <property name="alias" value="t"/>
+    </include>
+    FROM user_group_list t WHERE id IN
+    <foreach collection="idList" index="index" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
   </select>
 </mapper>

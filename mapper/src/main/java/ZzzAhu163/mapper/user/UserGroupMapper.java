@@ -26,4 +26,7 @@ public interface UserGroupMapper extends BaseMapper {
 
   //update
   int updateUserGroup(UserGroup userGroup);
+
+  //query user group by idList
+  List<UserGroup> querySimpleUserGroupList(List<Integer> idList);
 }

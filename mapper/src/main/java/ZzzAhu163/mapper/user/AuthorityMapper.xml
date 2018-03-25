@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ZzzAhu163.mapper.user.AuthorityMapper">
+  <sql id="queryColumns">
+    ${alias}.id, ${alias}.authoroity, ${alias}.description, ${alias}.create_time
+  </sql>
+
+  <resultMap id="AuthorityRoleMap" type="AuthorityRole">
+    <id property="id" column="id"/>
+    <result property="name" column="authority"/>
+    <result property="description" column="description"/>
+    <result property="createTime" column="create_time"/>
+  </resultMap>
+
+
+  <!--queryAuthorityRoleIdListByUserGroupId-->
+  <select id="queryAuthorityRoleIdListByUserGroupId" resultType="int">
+    SELECT authority_id FROM user_group_authorities WHERE user_group_id = #{userGroupId}
+  </select>
+
+  <!--queryAuthorityRoleByIdList-->
+  <select id="queryAuthorityRoleByIdList" resultMap="AuthorityRoleMap">
+    SELECT
+    <include refid="queryColumns">
+      <property name="alias" value="t"/>
+    </include>
+    FROM authority_list t
+    WHERE id IN
+    <foreach collection="idList" index="index" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </select>
+</mapper>

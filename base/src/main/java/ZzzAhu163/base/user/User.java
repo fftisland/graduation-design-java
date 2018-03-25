@@ -2,6 +2,7 @@ package ZzzAhu163.base.user;
 
 import ZzzAhu163.base.baseObject.BaseObject;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.CollectionUtils;
@@ -15,6 +16,7 @@ import java.util.*;
 
 @Alias("User")
 @Data
+@Slf4j
 public class User extends BaseObject {
 
   private String email;
@@ -59,6 +61,16 @@ public class User extends BaseObject {
     this.authorities = new ArrayList<>();
   }
 
+  public void setUserGroups(List<UserGroup> userGroups) {
+    try {
+      this.userGroups = userGroups;
+      mergeAuthorities();
+    } catch (Exception e) {
+      log.error("setUserGroups failed {}", e.toString());
+    }
+  }
+
+  //合并所有用户组权限
   public void mergeAuthorities() throws Exception {
     if (CollectionUtils.isEmpty(userGroups)) {
       throw new Exception("user has not join any group");
