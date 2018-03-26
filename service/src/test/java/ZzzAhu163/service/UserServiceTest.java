@@ -48,4 +48,9 @@ public class UserServiceTest extends AbstractTest {
     log.info("结果列表：{}", userList.toString());
   }
 
+  @Test
+  public void queryIdListTest() {
+    List<Integer> idList =
+  }
+
 }

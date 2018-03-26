@@ -77,4 +77,9 @@
       #{id}
     </foreach>
   </select>
+
+  <!--queryUserGroupIdListById-->
+  <select id="queryUserGroupIdListByUserId" resultType="int">
+    SELECT user_group_id FROM user_usergroup_map WHERE  user_id = #{userId}
+  </select>
 </mapper>
