@@ -4,12 +4,14 @@ import ZzzAhu163.base.baseObject.BaseQueryFilter;
 import ZzzAhu163.base.user.User;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.ToString;
 import org.apache.ibatis.type.Alias;
 
 /**
  * @author ZzzAhu163
  **/
 @Data
+@ToString(callSuper = true)
 public class UserQueryFilter extends BaseQueryFilter {
   private User user;
 
@@ -27,6 +29,7 @@ public class UserQueryFilter extends BaseQueryFilter {
   }
 
   public void reset() {
+    super.reset();
     user = null;
   }
 
@@ -39,6 +42,8 @@ public class UserQueryFilter extends BaseQueryFilter {
 
   public void setId(int id) {
     super.setId(id);
-    user.setId(id);
+    if (user != null) {
+      user.setId(id);
+    }
   }
 }
