@@ -24,30 +24,30 @@
 
   <sql id="userCondition">
     <where>
+      <if test="id > 0">
+        AND ${alias}.id = #{id}
+      </if>
+      <if test="name != null and name != ''">
+        AND ${alias}.user_name = #{name}
+      </if>
+      <if test="startTime > 0">
+        AND unix_timestatmp(${alias}.create_time) >= #{startTime}
+      </if>
+      <if test="endTime > 0">
+        AND unix_timestamp(${alias}.create_time) <![CDATA[ <= ]]> #{endTime}
+      </if>
       <if test="user != null">
-        <if test="id > 0">
-          AND ${alias}.id = #{id}
-        </if>
-        <if test="name != null and name != ''">
-          AND ${alias}.user_name = #{name}
-        </if>
         <if test="user.password != null and user.password != ''">
           AND ${alias}.password = #{user.password}
         </if>
         <if test="user.email != null and user.email != ''">
-          AND ${alias}.email = #{email}
+          AND ${alias}.email = #{user.email}
         </if>
         <if test="user.userRole != null">
           AND ${alias}.user_role = #{user.userRole, typeHandler=ZzzAhu163.mapper.user.typehandler.UserRoleHandler}
         </if>
         <if test="user.loginCount >= 0">
           AND ${alias}.login_count = #{user.loginCount}
-        </if>
-        <if test="startTime > 0">
-          AND unix_timestatmp(${alias}.create_time) >= #{startTime}
-        </if>
-        <if test="entTime > 0">
-          AND unix_timestamp(${alias}.create_time) <![CDATA[ <= ]]> #{endTime}
         </if>
       </if>
     </where>
@@ -80,7 +80,7 @@
   </select>
 
   <!--query list-->
-  <select id="queryUserList" resultMap="UserMap">
+  <select id="querySimpleUserList" resultMap="UserMap">
     SELECT
     <include refid="userColumns">
       <property name="alias" value="t"></property>
@@ -89,6 +89,7 @@
     <include refid="userCondition">
       <property name="alias" value="t"></property>
     </include>
+    LIMIT #{offSet}, #{pageSize}
   </select>
 
   <!--queryUserGroupIdListById-->

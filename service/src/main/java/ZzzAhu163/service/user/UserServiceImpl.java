@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> queryUserList(@NonNull UserQueryFilter filter) {
+    public List<User> querySimpleUserList(@NonNull UserQueryFilter filter) {
         int count = queryUserListCount(filter);
         if (count <= 0) {
             return null;
@@ -64,4 +64,9 @@ public class UserServiceImpl implements UserService {
     public List<Integer> queryUserGroupIdListById(int userId) {
         return userServiceMapper.queryUserGroupIdListById(userId);
     }
+
+  @Override
+  public List<User> queryUserList(UserQueryFilter filter) {
+    return null;
+  }
 }

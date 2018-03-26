@@ -1,6 +1,8 @@
 package ZzzAhu163.base.user;
 
 import ZzzAhu163.base.baseObject.BaseObject;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.Alias;
@@ -17,6 +19,8 @@ import java.util.*;
 @Alias("User")
 @Data
 @Slf4j
+@Builder()
+@AllArgsConstructor //全参数构造函数是给Builder用的
 public class User extends BaseObject {
 
   private String email;

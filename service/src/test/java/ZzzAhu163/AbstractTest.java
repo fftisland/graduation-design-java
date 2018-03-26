@@ -1,4 +1,4 @@
-package ZzzAhu163.service;
+package ZzzAhu163;
 
 
 import ZzzAhu163.base.firstentity.first;

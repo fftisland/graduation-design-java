@@ -14,7 +14,7 @@ public interface UserService {
     int queryUserListCount(UserQueryFilter filter);
 
     //query list
-    List<User> queryUserList(UserQueryFilter filter);
+    List<User> querySimpleUserList(UserQueryFilter filter);
 
     //query user
     User queryUser(UserQueryFilter filter);
@@ -24,4 +24,7 @@ public interface UserService {
 
     //queryUserGroupIdListById
     List<Integer> queryUserGroupIdListById(int userId);
+
+    //query User List 包含权限和用户组
+    List<User> queryUserList(UserQueryFilter filter);
 }
