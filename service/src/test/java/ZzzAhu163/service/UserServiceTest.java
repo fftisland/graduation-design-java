@@ -54,4 +54,11 @@ public class UserServiceTest extends AbstractTest {
     User user = userService.querySimpleUserById(id);
     log.info("查询结果：{}", user);
   }
+
+  @Test
+  public void allTest() throws Exception {
+    User user = userService.queryUserByName("ZzzAhu163");
+    log.info("用户所有权限条数为：{}", user.getAuthorities().size());
+    log.info("用户所有的权限为: {}", user.getAuthorities());
+  }
 }

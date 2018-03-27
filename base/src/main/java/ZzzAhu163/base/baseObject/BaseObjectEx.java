@@ -1,6 +1,7 @@
 package ZzzAhu163.base.baseObject;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.ibatis.type.Alias;
 
@@ -11,8 +12,9 @@ import java.sql.Timestamp;
  * 扩展基本类
  * **/
 @Data
-@ToString
+@ToString(callSuper = true)
 @Alias("BaseObjectEx")
+@EqualsAndHashCode(callSuper = true)
 public class BaseObjectEx extends BaseObject{
   private Timestamp createTime;
 

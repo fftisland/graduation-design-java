@@ -31,19 +31,14 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
    **/
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    log.info("执行provider的authenticate方法");
     UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
-    log.info("获得UsernamePasswordAuthenticationToken {}", token);
     UserDetails userDetails = myUserDetailService.loadUserByUsername(token.getName());
-    /**注意下面两个异常千万别自己处理，否则Security框架将截获不到验证结果**/
     if (null == userDetails) {
       throw new UsernameNotFoundException("没有找到用户名为{" + token.getName() + "}的用户");
     }
     if (!StringUtils.equals(userDetails.getPassword(), token.getCredentials().toString())) {
       throw new BadCredentialsException("用户{" + token.getName() + "} 密码输入错误{" + token.getCredentials().toString() + "}");
     }
-    //认证后的Token中包含了用户名，密码， 所含的权限
-    //当遇到URL的时候，拦截器将会从Security中取出UsernamePasswordAuthenticationToken进行用户所含权限和URL限定权限进行对比
     return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
   }
 

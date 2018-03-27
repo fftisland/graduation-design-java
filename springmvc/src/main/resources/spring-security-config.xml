@@ -18,8 +18,8 @@
                 authentication-failure-url="/fail.jsp"
                 username-parameter="username" password-parameter="password"/>
     <intercept-url pattern="/fail.jsp" access="permitAll" />
-    <intercept-url pattern="/user.jsp" access="hasRole('ROLE_USER')" />
-    <intercept-url pattern="/admin.jsp" access="hasRole('ROLE_ADMIN')" />
+    <intercept-url pattern="/user.jsp" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
+    <intercept-url pattern="/admin.jsp" access="hasAnyRole('ROLE_ADMIN')" />
     <!--禁用scrf-->
     <csrf disabled="true"/>
   </http>

@@ -35,6 +35,7 @@ public class MyUserDetailService implements UserDetailsService {
     User user = null;
     try {
       user = userService.queryUserByName(name);
+      log.info("用户所有的权限为: {}", user.getAuthorities());
     } catch (Exception e) {
       log.error("loadUserByUsername error : {}", e.toString());
     }
