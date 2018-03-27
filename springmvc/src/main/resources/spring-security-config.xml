@@ -10,6 +10,7 @@
   <!-- 不需要进行安全认证的资源 -->
   <http pattern="/resources/**" security="none" />
   <http pattern="/index.jsp" security="none" />
+  <http pattern="/fail.jsp" security="none" />
 
   <!--auto-config设为false，才启用form-login-->
   <http use-expressions="true" auto-config="true">
@@ -17,14 +18,11 @@
                 default-target-url="/user.jsp"
                 authentication-failure-url="/fail.jsp"
                 username-parameter="username" password-parameter="password"/>
-    <intercept-url pattern="/fail.jsp" access="permitAll" />
     <intercept-url pattern="/user.jsp" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
     <intercept-url pattern="/admin.jsp" access="hasAnyRole('ROLE_ADMIN')" />
     <!--禁用scrf-->
     <csrf disabled="true"/>
   </http>
-
-
 
   <!-- 认证管理器  默认为ProviderManager-->
   <authentication-manager alias="authenticationManager">
