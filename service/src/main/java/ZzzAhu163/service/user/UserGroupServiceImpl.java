@@ -2,12 +2,10 @@ package ZzzAhu163.service.user;
 
 import ZzzAhu163.base.user.UserGroup;
 import ZzzAhu163.base.user.filter.UserGroupQueryFilter;
-import ZzzAhu163.base.user.filter.UserQueryFilter;
 import ZzzAhu163.mapper.user.UserGroupMapper;
 import lombok.Data;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -38,40 +36,43 @@ public class UserGroupServiceImpl implements UserGroupService {
   }
 
   @Override
-  public int queryUserGroupListCount(UserGroupQueryFilter filter) {
+  public int queryUserGroupListCount(@NonNull UserGroupQueryFilter filter) {
     return userGroupMapper.queryUserGroupListCount(filter);
   }
 
   @Override
-  public List<UserGroup> queryUserGroupList(UserGroupQueryFilter filter) {
-    int count = queryUserGroupListCount(filter);
+  public List<UserGroup> querySimpleUserGroupList(@NonNull UserGroupQueryFilter filter) {
+    int count = 0;
+    count = queryUserGroupListCount(filter);
     if (count <= 0) {
       return null;
     }
-    List<UserGroup> list = userGroupMapper.queryUserGroupList(filter);
-    return addAuthorities(list);
+    return userGroupMapper.querySimpleUserGroupList(filter);
   }
 
   @Override
-  public UserGroup querySimpleUserGroup(UserGroupQueryFilter filter) {
-    return null;
+  public List<UserGroup> querySimpleUserGroupByIdList(@NonNull List<Integer> idList) {
+    if (idList.size() == 0) {
+      return null;
+    }
+    return userGroupMapper.querySimpleUserGroupListByIdList(idList);
   }
 
   @Override
-  public List<UserGroup> queryUserGroupList(List<Integer> idList) {
-    List<UserGroup> list =  userGroupMapper.querySimpleUserGroupList(idList);
-    if (!CollectionUtils.isEmpty(list)) {
-      return addAuthorities(list);
+  public List<Integer> queryUserGroupIdListByUserId(int userId) {
+    if (userId <= 0) {
+      return null;
     }
-    return null;
+    return userGroupMapper.queryUserGroupIdListByUserId(userId);
   }
 
-  //填充权限信息
-  private List<UserGroup> addAuthorities(List<UserGroup> list) {
-    for (UserGroup userGroup : list) {
-      userGroup.setAuthorities(authorityService.queryAuthorityListByUserGroupId(userGroup.getId()));
-    }
-    return list;
+  @Override
+  public List<UserGroup> querySimpleUserGroupListByUserId(int userId) {
+    //先查询UserGroupIdList
+    List<Integer> idList = queryUserGroupIdListByUserId(userId);
+    //再根据idList查询UserGroup
+    List<UserGroup> userGroupList = querySimpleUserGroupByIdList(idList);
+    return userGroupList;
   }
 }
 

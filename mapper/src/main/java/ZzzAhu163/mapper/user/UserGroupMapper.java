@@ -1,11 +1,8 @@
 package ZzzAhu163.mapper.user;
 
 import ZzzAhu163.BaseMapper;
-import ZzzAhu163.base.user.User;
 import ZzzAhu163.base.user.UserGroup;
 import ZzzAhu163.base.user.filter.UserGroupQueryFilter;
-import ZzzAhu163.base.user.filter.UserQueryFilter;
-
 import java.util.List;
 
 /**
@@ -16,7 +13,7 @@ public interface UserGroupMapper extends BaseMapper {
   int queryUserGroupListCount(UserGroupQueryFilter filter);
 
   //query list
-  List<UserGroup> queryUserGroupList(UserGroupQueryFilter filter);
+  List<UserGroup> querySimpleUserGroupList(UserGroupQueryFilter filter);
 
   //insert
   int insertUserGroup(UserGroup userGroup);
@@ -27,6 +24,9 @@ public interface UserGroupMapper extends BaseMapper {
   //update
   int updateUserGroup(UserGroup userGroup);
 
-  //query user group by idList
-  List<UserGroup> querySimpleUserGroupList(List<Integer> idList);
+  //query simple user group by idList
+  List<UserGroup> querySimpleUserGroupListByIdList(List<Integer> idList);
+
+  //query user group idList by user id
+  List<Integer> queryUserGroupIdListByUserId(int userId);
 }

@@ -29,6 +29,7 @@ public class UserGroupQueryFilter extends BaseQueryFilter {
   }
 
   public void reset() {
+    super.reset();
     this.userGroup = null;
   }
 

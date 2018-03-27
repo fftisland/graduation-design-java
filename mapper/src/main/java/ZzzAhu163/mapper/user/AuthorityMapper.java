@@ -20,7 +20,6 @@ public interface AuthorityMapper extends BaseMapper {
 
 
 
-
   /********************************UserAuthority*******************************/
-
+  //TODO：暂时未启用个人权限
 }

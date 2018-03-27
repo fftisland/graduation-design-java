@@ -49,8 +49,9 @@ public class UserServiceTest extends AbstractTest {
   }
 
   @Test
-  public void queryIdListTest() {
-    List<Integer> idList =
+  public void queryById() {
+    int id = 1;
+    User user = userService.querySimpleUserById(id);
+    log.info("查询结果：{}", user);
   }
-
 }

@@ -23,11 +23,5 @@ public interface UserServiceMapper extends BaseMapper {
   int queryUserListCount(UserQueryFilter filter);
 
   //query list
-  List<User> queryUserList(UserQueryFilter filter);
-
-  //query userGroup list count
-  int queryUserGroupListCount(int id);
-
-  //query userGroup List
-  List<UserGroup> queryUserGroupList(int id);
+  List<User> querySimpleUserList(UserQueryFilter filter);
 }

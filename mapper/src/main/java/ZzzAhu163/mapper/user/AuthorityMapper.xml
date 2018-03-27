@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ZzzAhu163.mapper.user.AuthorityMapper">
   <sql id="queryColumns">
-    ${alias}.id, ${alias}.authoroity, ${alias}.description, ${alias}.create_time
+    ${alias}.id, ${alias}.authority, ${alias}.description, ${alias}.create_time
   </sql>
 
   <resultMap id="AuthorityRoleMap" type="AuthorityRole">
@@ -28,7 +28,7 @@
     </include>
     FROM authority_list t
     WHERE id IN
-    <foreach collection="idList" index="index" item="id" open="(" separator="," close=")">
+    <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
       #{id}
     </foreach>
   </select>

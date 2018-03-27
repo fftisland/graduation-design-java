@@ -17,8 +17,9 @@ import org.hamcrest.core.Is;
 @Getter
 public enum IsBuildIn {
   UNKNOWN(-1, "未知类型", "防止出现枚举类型为空的情况"),
-  BUILD_IN(0, "内置类型", "从开始就存在的，不是由用户添加的"),
-  NOT_BUILD_IN(1, "非内置类型", "某些情况下动态生成的");
+  NOT_BUILD_IN(0, "非内置类型", "某些情况下动态生成的"),
+  BUILD_IN(1, "内置类型", "从开始就存在的，不是由用户添加的");
+
 
   private int code;
   private String name;

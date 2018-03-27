@@ -7,24 +7,27 @@ import org.omg.PortableInterceptor.INACTIVE;
 import java.util.List;
 
 /**
- *@author Zzz_Ahu_163
+ * @author Zzz_Ahu_163
  **/
 public interface UserService {
-    //query list count
-    int queryUserListCount(UserQueryFilter filter);
+  //query list count
+  int queryUserListCount(UserQueryFilter filter);
 
-    //query list
-    List<User> querySimpleUserList(UserQueryFilter filter);
+  //query list
+  List<User> querySimpleUserList(UserQueryFilter filter);
 
-    //query user
-    User queryUser(UserQueryFilter filter);
+  //query User List 包含权限和用户组
+  List<User> queryUserList(UserQueryFilter filter);
 
-    //query all user info
-    User queryUserAll(UserQueryFilter filter);
+  //query user by Id
+  User querySimpleUserById(int id);
 
-    //queryUserGroupIdListById
-    List<Integer> queryUserGroupIdListById(int userId);
+  //query user by id 包含权限和用户组
+  User queryUserById(int id);
 
-    //query User List 包含权限和用户组
-    List<User> queryUserList(UserQueryFilter filter);
+  //query user by name
+  User queryUserByName(String name);
+
+  //query simple user by name
+  User querySimpleUserByName(String name);
 }

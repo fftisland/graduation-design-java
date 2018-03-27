@@ -10,4 +10,10 @@ import java.util.List;
 public interface AuthorityService {
   //query Authority by group id
   List<AuthorityRole> queryAuthorityListByUserGroupId(int userGroupId);
+
+  //query Authority Id List By userGroupId
+  List<Integer> queryAuthorityIdListByUserGroupId(int userGroupId);
+
+  //query Authority List By idList
+  List<AuthorityRole> queryAuthorityListByIdList(List<Integer> idList);
 }

@@ -24,4 +24,15 @@ public class BaseObjectEx extends BaseObject{
   public BaseObjectEx(int id) {
     super(id);
   }
+
+  public BaseObjectEx(){
+    super();
+  }
+
+  public void reset() {
+    super.reset();
+    this.createTime = null;
+    this.updateTime = null;
+    this.remark = null;
+  }
 }
