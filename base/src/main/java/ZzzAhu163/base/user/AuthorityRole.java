@@ -1,6 +1,7 @@
 package ZzzAhu163.base.user;
 
 import ZzzAhu163.base.baseObject.BaseObject;
+import ZzzAhu163.base.baseObject.BaseObjectEx;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -20,12 +21,10 @@ import java.sql.Timestamp;
 @Alias("AuthorityRole")
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class AuthorityRole  extends BaseObject implements GrantedAuthority{
+public class AuthorityRole  extends BaseObjectEx implements GrantedAuthority{
     public AuthorityRole() {
       super();
     }
-
-    private Timestamp createTime;
 
     @Override
     public String getAuthority() {
@@ -33,6 +32,6 @@ public class AuthorityRole  extends BaseObject implements GrantedAuthority{
     }
 
     public void reset() {
-      this.createTime = null;
+      super.reset();
     }
 }

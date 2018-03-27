@@ -1,5 +1,6 @@
 package ZzzAhu163.service.user;
 
+import ZzzAhu163.base.user.AuthorityRole;
 import ZzzAhu163.base.user.UserGroup;
 import ZzzAhu163.base.user.filter.UserGroupQueryFilter;
 import ZzzAhu163.mapper.user.UserGroupMapper;
@@ -73,6 +74,24 @@ public class UserGroupServiceImpl implements UserGroupService {
     //再根据idList查询UserGroup
     List<UserGroup> userGroupList = querySimpleUserGroupByIdList(idList);
     return userGroupList;
+  }
+
+  @Override
+  public List<UserGroup> queryUserGroupListByUserId(int userId) {
+    List<UserGroup> simpleUserGroupList = querySimpleUserGroupListByUserId(userId);
+    if (simpleUserGroupList == null) {
+      return null;
+    }
+
+    for (UserGroup userGroup : simpleUserGroupList) {
+      List<AuthorityRole> authorityRoleList = authorityService.queryAuthorityListByUserGroupId(userGroup.getId());
+      if (authorityRoleList == null) {
+        return null;
+      }
+      userGroup.setAuthorities(authorityRoleList);
+    }
+
+    return simpleUserGroupList;
   }
 }
 

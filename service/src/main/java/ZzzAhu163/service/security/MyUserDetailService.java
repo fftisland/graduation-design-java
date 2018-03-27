@@ -32,14 +32,16 @@ public class MyUserDetailService implements UserDetailsService {
   /*自定义loadUserByUsername方法，根据用户名获取UserDetails，主要是为了获取权限*/
   @Override
   public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-    UserQueryFilter filter = new UserQueryFilter();
-    filter.setName(name);
-    User user = userService.queryUserByName(name); //queryUser中已经聚合了用户组等相关信息
+    User user = null;
+    try {
+      user = userService.queryUserByName(name);
+    } catch (Exception e) {
+      log.error("loadUserByUsername error : {}", e.toString());
+    }
     if (user == null) {
       return null;
     }
     //要把权限转成Collection<GrantedAuthority>的形式才能够给SpringSecurity直接使用
-    // UserDetails.getAuthorities()
     return new MyUserDetails(user, user.getAuthorities());
   }
 }

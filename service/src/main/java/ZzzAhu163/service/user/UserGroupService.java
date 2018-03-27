@@ -34,4 +34,7 @@ public interface UserGroupService {
 
   //query simple UserGroup By UserID
   List<UserGroup> querySimpleUserGroupListByUserId(int userId);
+
+  //query userGroup List by UserId
+  List<UserGroup> queryUserGroupListByUserId(int userId);
 }

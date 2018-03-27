@@ -8,7 +8,7 @@ import java.util.List;
  * @author ZzzAhu163
  **/
 public interface AuthorityService {
-  //query Authority by group id
+  //query AuthorityList by group id
   List<AuthorityRole> queryAuthorityListByUserGroupId(int userGroupId);
 
   //query Authority Id List By userGroupId
