@@ -15,7 +15,7 @@
     <import resource="classpath:spring-security-config.xml"></import>
 
     <!--包扫描-->
-    <context:component-scan base-package="ZzzAhu163.springmvc"></context:component-scan>
+    <context:component-scan base-package="ZzzAhu163"></context:component-scan>
 
     <!--启用Spring的动态代理，这样才能使用@Autowired注解-->
     <aop:aspectj-autoproxy proxy-target-class="true"/>

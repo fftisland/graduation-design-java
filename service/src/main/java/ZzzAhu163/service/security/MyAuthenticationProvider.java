@@ -25,10 +25,6 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
   @Resource
   private MyUserDetailService myUserDetailService;
 
-  /**
-   * SpringSecurity会将前端用户名和密码封装成一个UserDetails赋值给authentication
-   * 不过我们这里使用较为简单的实现类UsernamePasswordAuthenticationToken
-   **/
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;

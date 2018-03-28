@@ -12,7 +12,7 @@
   <http pattern="/index.jsp" security="none" />
   <http pattern="/fail.jsp" security="none" />
 
-  <!--auto-config设为false，才启用form-login-->
+  <!--auto-config设为false-->
   <http use-expressions="true" auto-config="true">
     <form-login login-page="/index.jsp" login-processing-url="/login"
                 default-target-url="/user.jsp"

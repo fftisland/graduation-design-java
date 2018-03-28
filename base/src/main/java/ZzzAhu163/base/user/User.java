@@ -13,14 +13,14 @@ import java.sql.Timestamp;
 import java.util.*;
 
 /**
- * @author Zzz_Ahu_163
+ * @author ZzzAhu163
  **/
 
 @Alias("User")
 @Data
 @Slf4j
 @Builder()
-@AllArgsConstructor //全参数构造函数是给Builder用的
+@AllArgsConstructor
 public class User extends BaseObject {
 
   private String email;
