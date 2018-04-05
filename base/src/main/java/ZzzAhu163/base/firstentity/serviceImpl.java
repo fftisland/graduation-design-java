@@ -10,4 +10,13 @@ public class serviceImpl implements service {
   //1、使用静态代理，没什么说的
   //2、使用JDK动态代理
   //3、使用Cglib动态代理
+
+  //新方法，使用切面进行增强
+  public void doSomething1() {
+    System.out.println("doSomething1");
+  }
+
+  public void doSomething2() {
+    System.out.println("doSomething2");
+  }
 }

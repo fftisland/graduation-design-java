@@ -1,15 +1,13 @@
 package ZzzAhu163.test;
 
 import ZzzAhu163.base.firstentity.*;
-import ZzzAhu163.base.firstentity.SpringAop.AfterAdvice;
-import ZzzAhu163.base.firstentity.SpringAop.AroundAdvice;
-import ZzzAhu163.base.firstentity.SpringAop.BeforeAdvice;
-import ZzzAhu163.base.firstentity.SpringAop.IntroductionAdvice;
+import ZzzAhu163.base.firstentity.SpringAop.*;
 import ZzzAhu163.utils.ConstValue.SharedPropertiesProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.support.RegexpMethodPointcutAdvisor;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -98,5 +96,36 @@ public class AbstractTest {
     //代理后Spring给我们提供了强转成增强接口的功能，当然我么也可以直接在getProxy的时候直接返回NewInterface类型
     NewInterface newInterface = (NewInterface)proxy;
     newInterface.newFunction();
+  }
+
+
+  /**5、切面功能
+   * 前面了解了JDK动态代理，Cglib动态代理以及Spring提供的动态代理，但是他们都有个缺点
+   * 那就是，我们在进行通知织入的时候，都需要通过Method自己来判断是否需要使用Advice
+   * 秉着复杂就一定有问题的原则，让我们开始接触AOP编程
+   *
+   * 如果我们能把对Method的判断和Advice直接绑定在一起，是不是会很方便呢？
+   * 对的，对Method的判断其实就是PointCut(切点)的概念，而 Advice + PointCut就是一个切面，Advisor
+   * **/
+  @Test
+  public void SpringAdvisorTest() {
+    /**Spring默认给我们提供了几个自带的切面类，下面这个是基于正则对的切面类**/
+    ProxyFactory proxyFactory = new ProxyFactory();
+    proxyFactory.setTarget(new serviceImpl());
+    proxyFactory.setProxyTargetClass(true);
+    //切面
+    RegexpMethodPointcutAdvisor advisor = new RegexpMethodPointcutAdvisor();
+    //切点，
+    advisor.setPattern(".*");
+    //通知
+    advisor.setAdvice(new CommonAdvice());
+    //织入切面
+    proxyFactory.addAdvisor(advisor);
+    //获取代理
+    serviceImpl proxy = (serviceImpl) proxyFactory.getProxy();
+
+    proxy.sayhello();
+    proxy.doSomething1();
+    proxy.doSomething2();
   }
 }
