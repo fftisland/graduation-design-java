@@ -27,4 +27,19 @@
       <value>classpath:base.properties</value>
     </property>
   </bean>
+
+  <!--批量代理-->
+  <bean id="batchProxyFactory" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+    <property name="beanNames" value="*eImpl"/> <!--匹配需要被代理的Bean的名字-->
+    <property name="interceptorNames" value="regexAdvisor"/> <!--切面Bean的名字，不知道为什么要用value而不用ref-->
+    <property name="optimize" value="true"/>  <!--自动选择代理方式-->
+  </bean>
+
+  <!--正则表达式切面-->
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor" id="regexAdvisor">
+      <property name="pattern" value=".*hello"/>
+      <property name="advice" ref="CommonAdvice"/>
+  </bean>
+
+  <aop:aspectj-autoproxy proxy-target-class="true"/> <!--开启Cglib代理-->
 </beans>

@@ -1,12 +1,14 @@
 package ZzzAhu163.test;
 
 import ZzzAhu163.base.firstentity.*;
+import ZzzAhu163.base.firstentity.Aspecj.AspectIntroduce;
 import ZzzAhu163.base.firstentity.SpringAop.*;
 import ZzzAhu163.utils.ConstValue.SharedPropertiesProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.aop.support.RegexpMethodPointcutAdvisor;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.test.context.ContextConfiguration;
@@ -127,5 +129,51 @@ public class AbstractTest {
     proxy.sayhello();
     proxy.doSomething1();
     proxy.doSomething2();
+  }
+
+  /**
+   * 6、ProxyFactory我们已经熟悉了，但是我们要是想批量代理需要类，这个时候要如何呢。
+   * Spring给我们提供了批量代理工厂BeanNameAutoProxyCreator
+   * **/
+
+  @Resource
+  private serviceImpl serviceImpl;
+  @Test
+  public void BatchProxyFactory() {
+    //由于是代理的Bean，所以BeanNameAutoProxyCreator也要配置成Bean
+    //现在我们获取目标Bean，发现已经是被代理后的Bean了
+    serviceImpl.sayhello();
+    serviceImpl.doSomething1();
+    serviceImpl.doSomething2();
+  }
+
+  /**
+   * 7、不过我们还是发现会有不妥之处，那就是Spring提供的AOP模板过于死板
+   * 举个例子：我有三个不同的类，每个类有三个不同的方法，这种情况下 我就要写很多AOP配置
+   * 所以，最终Spring在保留了自己AOP功能的同时，集成了AspectJ
+   * 目前通常都是使用Spring + AspectJ，根据execution表达式拦截方法实现AOP
+   *
+   * 开启Aspect切面只需要在xml中开启配置即可
+   * **/
+  @Resource
+  private AspectImpl aspectImpl;
+  @Test
+  public void AspectAOPTest() {
+    aspectImpl.sayHello();
+    aspectImpl.doSomething();
+  }
+
+  /**8、不仅仅使用execution表达式匹配方法，
+   * 还支持使用@annotation()注解来标志需要进行拦截**/
+  @Test
+  public void AnnotationAopTest() {
+    aspectImpl.annotationTest();
+  }
+
+  /**Aspect同样给我们提供了引入增强的方法**/
+  @Test
+  public void AspectIntroduction() {
+    AspectIntroduce introduce = (AspectIntroduce)aspectImpl;
+    introduce.aspectDisplay();
   }
 }

@@ -1,5 +1,8 @@
 package ZzzAhu163.base.firstentity;
 
+import org.springframework.stereotype.Component;
+
+@Component("serviceImpl")
 public class serviceImpl implements service {
   @Override
   public void sayhello() {
