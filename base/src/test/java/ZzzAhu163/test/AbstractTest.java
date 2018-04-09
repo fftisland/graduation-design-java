@@ -2,11 +2,16 @@ package ZzzAhu163.test;
 
 import ZzzAhu163.base.firstentity.*;
 import ZzzAhu163.base.firstentity.Aspecj.AspectIntroduce;
+import ZzzAhu163.base.firstentity.BeanValidationLearning.NotNullButEmailBean;
+import ZzzAhu163.base.firstentity.BeanValidationLearning.StringNotEmpty;
+import ZzzAhu163.base.firstentity.BeanValidationLearning.StringNotEmptyBean;
 import ZzzAhu163.base.firstentity.SpringAop.*;
+import ZzzAhu163.utils.BeanValidationUtil.BeanValidationUtil;
 import ZzzAhu163.utils.ConstValue.SharedPropertiesProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.omg.CosNaming.NamingContextPackage.NotEmpty;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.aop.support.RegexpMethodPointcutAdvisor;
@@ -175,5 +180,15 @@ public class AbstractTest {
   public void AspectIntroduction() {
     AspectIntroduce introduce = (AspectIntroduce)aspectImpl;
     introduce.aspectDisplay();
+  }
+
+  /**来测试下我们写的BeanValidation验证工具类**/
+  @Resource
+  BeanValidationUtil beanValidationUtil;
+  @Test
+  public void utilTest() {
+    StringNotEmptyBean bean = new StringNotEmptyBean();
+    String message = beanValidationUtil.validate(bean);
+    log.info("验证结果：{}", message);
   }
 }
