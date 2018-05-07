@@ -6,9 +6,14 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 /**
@@ -18,16 +23,18 @@ import java.security.Principal;
 @Component("SharedWebUtils")
 @Slf4j
 public class SharedWebUtils {
-  public static MyUserDetails getMyUserDetails(@NonNull HttpServletRequest request) {
-    Principal principal = request.getUserPrincipal();
-    if (principal instanceof UsernamePasswordAuthenticationToken) {
-      UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken)principal;
-      Object obj = token.getDetails();
-      if (obj != null && obj instanceof MyUserDetails) {
-        return (MyUserDetails)obj;
-      }
+  private static MyUserDetails getMyUserDetails(HttpServletRequest request) {
+    if (request == null) {
+      return null;
     }
-    return null;
+    HttpSession session = request.getSession();
+    SecurityContextImpl impl = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
+    Authentication authentication = impl.getAuthentication();
+    if (authentication == null) {
+      return null;
+    }
+    MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+    return userDetails;
   }
 
   public static User getRequestUser(HttpServletRequest request) {

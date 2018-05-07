@@ -10,7 +10,7 @@ import java.util.Collection;
 
 @Data
 @Alias("MyUserDetails")
-@ToString
+@ToString(callSuper = true)
 public class MyUserDetails implements UserDetails {
     private User user;
 
