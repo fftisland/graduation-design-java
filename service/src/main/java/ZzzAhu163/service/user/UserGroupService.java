@@ -2,6 +2,7 @@ package ZzzAhu163.service.user;
 
 import ZzzAhu163.base.user.User;
 import ZzzAhu163.base.user.UserGroup;
+import ZzzAhu163.base.user.UserGroupType;
 import ZzzAhu163.base.user.filter.UserGroupQueryFilter;
 import ZzzAhu163.base.user.filter.UserQueryFilter;
 
@@ -37,4 +38,10 @@ public interface UserGroupService {
 
   //query userGroup List by UserId
   List<UserGroup> queryUserGroupListByUserId(int userId);
+
+  /**insert user list into userGroup**/
+  Boolean insertUserListIntoUserGroup(List<User> userList, UserGroupType userGroupType);
+
+  /**query user group id by userGroupType**/
+  int queryUserGroupIdByType(UserGroupType type);
 }

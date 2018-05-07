@@ -8,7 +8,7 @@
   <display-name>Shared SpringMVC Service</display-name>
 
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
 
   <!--spring-security-->

@@ -1,11 +1,14 @@
 package ZzzAhu163.service.user;
 
 import ZzzAhu163.base.user.AuthorityRole;
+import ZzzAhu163.base.user.User;
 import ZzzAhu163.base.user.UserGroup;
+import ZzzAhu163.base.user.UserGroupType;
 import ZzzAhu163.base.user.filter.UserGroupQueryFilter;
 import ZzzAhu163.mapper.user.UserGroupMapper;
 import lombok.Data;
 import lombok.NonNull;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -92,6 +95,35 @@ public class UserGroupServiceImpl implements UserGroupService {
     }
 
     return simpleUserGroupList;
+  }
+
+  @Override
+  public Boolean insertUserListIntoUserGroup(List<User> userList, UserGroupType userGroupType) {
+    if (CollectionUtils.isEmpty(userList)) {
+      return false;
+    }
+    //删除没有userId的数据
+    for (int i = 0; i < userList.size(); i++) {
+      User user = userList.get(i);
+      if (user == null || user.getId() <= 0) {
+        userList.remove(i);
+        i--;
+      }
+    }
+    int userGroupId = userGroupMapper.queryUserGroupIdByType(userGroupType);
+    if (userGroupId <= 0) {
+      return false;
+    }
+    int count = userGroupMapper.insertUserListIntoUserGroup(userList, userGroupId);
+    return count > 0 ? true : false;
+  }
+
+  @Override
+  public int queryUserGroupIdByType(UserGroupType type) {
+    if (type == null) {
+      return 0;
+    }
+    return userGroupMapper.queryUserGroupIdByType(type);
   }
 }
 

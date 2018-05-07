@@ -4,6 +4,7 @@ import ZzzAhu163.base.baseObject.BaseObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ import java.util.*;
 @Slf4j
 @Builder()
 @AllArgsConstructor
+@ToString(callSuper = true)
 public class User extends BaseObject {
 
   private String email;

@@ -1,8 +1,12 @@
 package ZzzAhu163.mapper.user;
 
 import ZzzAhu163.BaseMapper;
+import ZzzAhu163.base.user.User;
 import ZzzAhu163.base.user.UserGroup;
+import ZzzAhu163.base.user.UserGroupType;
 import ZzzAhu163.base.user.filter.UserGroupQueryFilter;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -29,4 +33,10 @@ public interface UserGroupMapper extends BaseMapper {
 
   //query user group idList by user id
   List<Integer> queryUserGroupIdListByUserId(int userId);
+
+  //insert userList into userGroup
+  int insertUserListIntoUserGroup(@Param("userList") List<User> list, @Param("userGroupId")int userGroupId);
+
+  //queryUserGroupIdByType
+  int queryUserGroupIdByType(@Param("userGroupType") UserGroupType type);
 }

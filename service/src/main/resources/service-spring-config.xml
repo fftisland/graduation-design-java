@@ -71,5 +71,4 @@
   </aop:config>
   <!-- task任务扫描注解 -->
   <task:annotation-driven/>
-
 </beans>

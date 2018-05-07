@@ -11,10 +11,11 @@
   <http pattern="/resources/**" security="none" />
   <http pattern="/index.jsp" security="none" />
   <http pattern="/fail.jsp" security="none" />
+  <!--login-processing-url不要设置为none，否则将不会拦截这个请求-->
 
   <!--auto-config设为false-->
   <http use-expressions="true" auto-config="true">
-    <form-login login-page="/index.jsp" login-processing-url="/login"
+    <form-login login-page="/index.jsp" login-processing-url="/user/login"
                 default-target-url="/user.jsp"
                 authentication-failure-url="/fail.jsp"
                 username-parameter="username" password-parameter="password"/>

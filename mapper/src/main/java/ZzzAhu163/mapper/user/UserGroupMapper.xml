@@ -82,4 +82,21 @@
   <select id="queryUserGroupIdListByUserId" resultType="int">
     SELECT user_group_id FROM user_usergroup_map WHERE  user_id = #{userId}
   </select>
+
+  <!--insertUserListIntoUserGroup-->
+  <!--使用foreach批量插入数据-->
+  <insert id="insertUserListIntoUserGroup">
+    INSERT INTO user_usergroup_map (user_id, user_group_id, create_time)
+    VALUE
+    <foreach collection="userList" item="item" index="index" separator=",">
+      (
+        #{item.id}, #{userGroupId}, now()
+      )
+    </foreach>
+  </insert>
+
+  <!--query userGroupId by type-->
+  <select id="queryUserGroupIdByType" resultType="int">
+    SELECT id FROM user_group_list WHERE user_group_type = #{userGroupType.code}
+  </select>
 </mapper>

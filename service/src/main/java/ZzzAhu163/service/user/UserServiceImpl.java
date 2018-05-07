@@ -1,14 +1,12 @@
 package ZzzAhu163.service.user;
 
-import ZzzAhu163.base.user.AuthorityRole;
-import ZzzAhu163.base.user.User;
-import ZzzAhu163.base.user.UserGroup;
-import ZzzAhu163.base.user.UserRole;
+import ZzzAhu163.base.user.*;
 import ZzzAhu163.base.user.filter.UserQueryFilter;
 import ZzzAhu163.mapper.user.UserGroupMapper;
 import ZzzAhu163.mapper.user.UserServiceMapper;
 import lombok.Data;
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -62,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
   //带权限的User
   @Override
-  public User queryUserById(int id) throws Exception {
+  public User queryUserById(int id){
     User user = querySimpleUserById(id);
     if (user == null) {
       return null;
@@ -74,7 +72,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public User queryUserByName(String name) {
     User simpleUser = querySimpleUserByName(name);
-    if (simpleUser == null) {
+    if (simpleUser == null || simpleUser.getId() <= 0) {
       return null;
     }
     fillUserInfo(simpleUser);
@@ -92,13 +90,42 @@ public class UserServiceImpl implements UserService {
     return list.get(0);
   }
 
+  @Override
+  public User querySimpleUserByEmail(String email) {
+    if (StringUtils.isBlank(email)) {
+      return null;
+    }
+    User user = new User();
+    user.setEmail(email);
+    UserQueryFilter filter = new UserQueryFilter(user);
+    List<User> list = querySimpleUserList(filter);
+    if (list == null) {
+      return null;
+    }
+    return list.get(0);
+  }
+
+  @Override
+  public Boolean insertUser(User user) {
+    if (user == null || user.getId() > 0) {
+      return false;
+    }
+    userServiceMapper.insertUser(user);
+    if (user.getId() <= 0) {
+      return false;
+    }
+    //插入到普通用户组
+    List<User> userList = new ArrayList<>();
+    userList.add(user);
+    return userGroupService.insertUserListIntoUserGroup(userList, UserGroupType.GROUP_USER);
+  }
+
   //填充User的用户组信息
   private void fillUserInfo(@NonNull User user) {
-    if (user.getId() <= 0) {
-      user = null;
+    int userId = user.getId();
+    if (userId <= 0) {
       return;
     }
-    int userId = user.getId();
     List<UserGroup> userGroupList = userGroupService.queryUserGroupListByUserId(user.getId());
     if (userGroupList == null) {
       user = null;

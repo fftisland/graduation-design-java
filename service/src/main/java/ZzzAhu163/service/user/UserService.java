@@ -23,11 +23,17 @@ public interface UserService {
   User querySimpleUserById(int id);
 
   //query user by id 包含权限和用户组
-  User queryUserById(int id) throws Exception;
+  User queryUserById(int id);
 
   //query user by name
-  User queryUserByName(String name) throws Exception;
+  User queryUserByName(String name);
 
   //query simple user by name
   User querySimpleUserByName(String name);
+
+  //query simple user by email
+  User querySimpleUserByEmail(String email);
+
+  //insert user
+  Boolean insertUser(User user);
 }

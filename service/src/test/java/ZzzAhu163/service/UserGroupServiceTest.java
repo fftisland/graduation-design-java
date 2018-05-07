@@ -62,4 +62,11 @@ public class UserGroupServiceTest extends AbstractTest {
     List<UserGroup> groupList = userGroupService.querySimpleUserGroupListByUserId(userId);
     log.info("User Group List:{}", groupList);
   }
+
+  @Test
+  public void queryUserGroupIdByType() {
+    UserGroupType type = UserGroupType.GROUP_SUPER_ADMIN;
+    int id = userGroupService.queryUserGroupIdByType(type);
+    log.info("查询结果:{}", id);
+  }
 }

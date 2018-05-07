@@ -38,6 +38,7 @@ public class UserQueryFilter extends BaseQueryFilter {
     if (getId() == 0 && user.getId() > 0) {
       setId(user.getId());
     }
+    this.user = user;
   }
 
   public void setId(int id) {

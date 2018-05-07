@@ -2,6 +2,7 @@ package ZzzAhu163.base.baseObject;
 
 import ZzzAhu163.base.ContactGroup.ContactGroup;
 import lombok.Data;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.ibatis.type.Alias;
 
 import java.util.List;
@@ -25,5 +26,12 @@ public class BaseObjectWithContactGroup extends BaseObjectEx{
   public void reset() {
     this.entityType = EntityType.UNKNOWN;
     this.contactGroups = null;
+  }
+
+  public ContactGroup getFirstGroup() {
+    if (CollectionUtils.isEmpty(contactGroups)) {
+      return null;
+    }
+    return contactGroups.get(0);
   }
 }

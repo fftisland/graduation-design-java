@@ -11,7 +11,7 @@
 <div>
   <!--表单会被SpringSecurity拦截，进入manager-->
   <!--必须要使用post提交表单的方式-->
-  <form action="login" method="post">
+  <form action="user/login" method="post">
     用户名：<input type="text" name="username" /><br/>
     密  码：<input type="text" name="password" /><br/>
     <button type="submit">登录</button>
