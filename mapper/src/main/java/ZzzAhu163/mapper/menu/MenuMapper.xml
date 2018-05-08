@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ZzzAhu163.mapper.menu.MenuMapper">
+    <resultMap id="MenuItemResult" type="MenuItem">
+        <id property="id" column="id"/>
+        <result property="name" column="menu_item_name"/>
+        <result property="menuCode" column="sub_menu_code"/>
+        <result property="routerUrl" column="router_url"/>
+        <result property="iconType" column="icon_type"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="queryColumns">
+        ${alias}.id, ${alias}.sub_menu_code, ${alias}.menu_item_name,
+        ${alias}.router_url, ${alias}.icon_type, ${alias}.create_time,
+        ${alias}.update_time
+    </sql>
+
+    <sql id="queryCondition">
+        <where>
+            <if test="menuItem != null">
+                <if test="menuItem.id > 0">
+                    AND ${alias}.id = #{menuItem.id}
+                </if>
+                <if test="menuItem.menuCode > 0">
+                    AND ${alias}.sub_menu_code = #{menuItem.menuCode}
+                </if>
+                <if test="menuItem.name != null and menuItem.name != ''">
+                    AND ${alias}.menu_item_name = #{menuItem.name}
+                </if>
+                <if test="menuItem.iconType != null and menuItem.iconType != ''">
+                    AND ${alias}.icon_type = #{menuItem.iconType}
+                </if>
+                <if test="menuItem.routerUrl != null and menuItem.routerUrl != ''">
+                    AND ${alias}.router_url = #{menuItem.routerUrl}
+                </if>
+            </if>
+        </where>
+    </sql>
+
+    <select id="queryMenuItemListCountByFilter" resultType="int">
+        SELECT count(1) FROM menu_item_list t
+        <include refid="queryCondition">
+            <property name="alias" value="t"/>
+        </include>
+    </select>
+
+    <select id="queryMenuItemListByFilter" resultMap="MenuItemResult">
+        SELECT
+        <include refid="queryColumns">
+            <property name="alias" value="t"/>
+        </include>
+        FROM menu_item_list t
+        <include refid="queryCondition">
+            <property name="alias" value="t"/>
+        </include>
+    </select>
+
+    <insert id="insertMenuItem" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO menu_item_list
+        (
+        sub_menu_code, menu_item_name, router_url, icon_type, create_time, update_time
+        )
+        VALUES
+        (
+        #{menuCode}, #{name}, #{routerUrl}, #{iconType}, now(), now()
+        )
+    </insert>
+
+    <update id="updateMenuItem">
+        UPDATE menu_item_list SET
+        sub_menu_code = #{menuCode},
+        menu_item_name = #{name},
+        router_url = #{routerUrl},
+        icon_type = #{iconType},
+        update_time = now()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteMenuItemById">
+        DELETE FROM menu_item_list where id = #{id}
+    </delete>
+</mapper>

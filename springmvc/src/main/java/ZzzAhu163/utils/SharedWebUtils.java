@@ -23,7 +23,7 @@ import java.security.Principal;
 @Component("SharedWebUtils")
 @Slf4j
 public class SharedWebUtils {
-  private static MyUserDetails getMyUserDetails(HttpServletRequest request) {
+  public static MyUserDetails getMyUserDetails(HttpServletRequest request) {
     if (request == null) {
       return null;
     }

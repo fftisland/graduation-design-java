@@ -1,8 +1,5 @@
 package ZzzAhu163;
 
-
-import ZzzAhu163.base.firstentity.first;
-import ZzzAhu163.service.FirstService.FirstService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,15 +12,5 @@ import javax.annotation.Resource;
 @ContextConfiguration("classpath:service-spring-config.xml")
 @Slf4j
 public class AbstractTest {
-  @Resource
-  FirstService firstService;
-
-  @Test
-  public void test() {
-    first first = new first();
-    first.setData("service测试");
-    boolean result = firstService.insertFirstData(first);
-    log.info("service result：" + result);
-  }
 
 }

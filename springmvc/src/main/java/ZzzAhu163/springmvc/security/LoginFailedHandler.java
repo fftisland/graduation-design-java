@@ -20,8 +20,6 @@ public class LoginFailedHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException e) throws IOException, ServletException {
-        log.info("user login failed : {}", e.toString());
-        //请求转发到 /security/handle/failed
         request.setAttribute("exception", e);
         request.getRequestDispatcher("/security/handle/failed").forward(request, response);
     }

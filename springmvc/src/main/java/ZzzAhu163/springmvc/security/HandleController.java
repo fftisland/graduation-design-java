@@ -2,6 +2,7 @@ package ZzzAhu163.springmvc.security;
 
 import ZzzAhu163.base.baseResult.BaseResult;
 import ZzzAhu163.base.user.User;
+import ZzzAhu163.utils.SharedWebUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ public class HandleController {
     public Object loginSuccessResult(HttpServletRequest request, HttpServletResponse response) {
         BaseResult result = BaseResult.getSuccessResult();
         User user = (User) request.getAttribute("user");
+        log.info("登录认证成功 : {}", user);
         result.setDataItems(user);
         result.setMsg("LOGIN_SUCCESS");
         return result;
@@ -42,6 +44,7 @@ public class HandleController {
     public Object loginFailedResuslt(HttpServletRequest request, HttpServletResponse response) {
         BaseResult result = BaseResult.getSuccessResult();
         Exception e = (Exception) request.getAttribute("exception");
+        log.info("登录认证失败 : {}", e.toString());
         result.setDataItems(e.toString());
         result.setMsg("LOGIN_FAILED");
         return result;
