@@ -1,6 +1,8 @@
 package ZzzAhu163.service.user;
 
-import ZzzAhu163.base.user.AuthorityRole;
+import ZzzAhu163.base.authority.AuthorityQueryFilter;
+import ZzzAhu163.base.authority.AuthorityRole;
+import ZzzAhu163.base.authority.DataType;
 import ZzzAhu163.base.user.User;
 import ZzzAhu163.base.user.UserGroup;
 import ZzzAhu163.base.user.UserGroupType;
@@ -87,7 +89,8 @@ public class UserGroupServiceImpl implements UserGroupService {
     }
 
     for (UserGroup userGroup : simpleUserGroupList) {
-      List<AuthorityRole> authorityRoleList = authorityService.queryAuthorityListByUserGroupId(userGroup.getId());
+      List<AuthorityRole> authorityRoleList =
+              authorityService.queryDataAuthorityList(new AuthorityQueryFilter(DataType.USER_GROUP, userGroup.getId()));
       if (authorityRoleList == null) {
         return null;
       }

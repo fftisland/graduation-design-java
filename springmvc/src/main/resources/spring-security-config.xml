@@ -6,24 +6,29 @@
                              http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
                              http://www.springframework.org/schema/security
                              http://www.springframework.org/schema/security/spring-security-4.1.xsd">
-
   <!-- 不需要进行安全认证的资源 -->
   <http pattern="/resources/**" security="none" />
   <http pattern="/index.jsp" security="none" />
   <http pattern="/fail.jsp" security="none" />
   <!--login-processing-url不要设置为none，否则将不会拦截这个请求-->
 
-  <!--auto-config设为false-->
+  <!--auto-config设为true则会使用SpringSecurity的默认配置-->
   <http use-expressions="true" auto-config="true">
     <form-login login-processing-url="/user/login"
                 login-page="/#/login"
                 authentication-success-handler-ref="LoginSuccessHandler"
                 authentication-failure-handler-ref="LoginFailedHandler"
                 username-parameter="username" password-parameter="password"/>
-    <intercept-url pattern="/user.jsp" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
-    <intercept-url pattern="/admin.jsp" access="hasAnyRole('ROLE_ADMIN')" />
     <!--禁用scrf-->
     <csrf disabled="true"/>
+
+    <!--UserController-->
+    <intercept-url pattern="/user/info" access="hasAnyRole('ROLE_USER_INFO', 'ROLE_ALL_ALL_ALL')" />
+
+    <!--MenuController-->
+    <intercept-url pattern="/menu/query" access="hasAnyRole('ROLE_MENU_QUERY', 'ROLE_ALL_ALL_ALL')" />
+
+
   </http>
 
   <!-- 认证管理器  默认为ProviderManager-->

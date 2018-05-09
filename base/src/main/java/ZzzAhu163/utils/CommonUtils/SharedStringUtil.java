@@ -1,6 +1,6 @@
 package ZzzAhu163.utils.CommonUtils;
 
-import ZzzAhu163.base.user.AuthorityRole;
+import ZzzAhu163.base.authority.AuthorityRole;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;

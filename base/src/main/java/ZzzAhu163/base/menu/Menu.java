@@ -3,6 +3,7 @@ package ZzzAhu163.base.menu;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,5 +23,10 @@ public class Menu {
         this.subMenuList = null;
     }
 
-    //TODO:根据USer处理当前subMenuList哪些可以回显给前端
+    public void addSubMenu(SubMenu subMenu) {
+        if (this.subMenuList == null) {
+            subMenuList = new ArrayList<>();
+        }
+        subMenuList.add(subMenu);
+    }
 }

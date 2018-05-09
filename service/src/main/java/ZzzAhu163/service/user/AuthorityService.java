@@ -1,6 +1,9 @@
 package ZzzAhu163.service.user;
 
-import ZzzAhu163.base.user.AuthorityRole;
+import ZzzAhu163.base.authority.AuthorityQueryFilter;
+import ZzzAhu163.base.authority.DataType;
+import ZzzAhu163.base.menu.MenuItem;
+import ZzzAhu163.base.authority.AuthorityRole;
 
 import java.util.List;
 
@@ -8,12 +11,21 @@ import java.util.List;
  * @author ZzzAhu163
  **/
 public interface AuthorityService {
-  //query AuthorityList by group id
-  List<AuthorityRole> queryAuthorityListByUserGroupId(int userGroupId);
+  /***********************Authority*************************************/
+  boolean insertAuthorityRole(AuthorityRole authorityRole);
 
-  //query Authority Id List By userGroupId
-  List<Integer> queryAuthorityIdListByUserGroupId(int userGroupId);
+  boolean updateAuthorityRole(AuthorityRole authorityRole);
 
-  //query Authority List By idList
-  List<AuthorityRole> queryAuthorityListByIdList(List<Integer> idList);
+  List<AuthorityRole> queryAuthorityRoleList(AuthorityQueryFilter filter);
+
+  int queryAuthorityRoleListCount(AuthorityQueryFilter filter);
+
+  /********************Authority Map***************************/
+  boolean insertDataAuthorityList(DataType dataType, int dataId, List<AuthorityRole> authorityRoleList);
+
+  boolean deleteDataAuthorityList(DataType dataType, List<Integer> dataIdList);
+
+  int queryDataAuthorityListCount(AuthorityQueryFilter filter);
+
+  List<AuthorityRole> queryDataAuthorityList(AuthorityQueryFilter filter);
 }

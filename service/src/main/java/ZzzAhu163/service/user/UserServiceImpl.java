@@ -1,5 +1,8 @@
 package ZzzAhu163.service.user;
 
+import ZzzAhu163.base.authority.AuthorityQueryFilter;
+import ZzzAhu163.base.authority.AuthorityRole;
+import ZzzAhu163.base.authority.DataType;
 import ZzzAhu163.base.user.*;
 import ZzzAhu163.base.user.filter.UserQueryFilter;
 import ZzzAhu163.mapper.user.UserGroupMapper;
@@ -27,6 +30,8 @@ public class UserServiceImpl implements UserService {
   private UserServiceMapper userServiceMapper;
   @Resource
   private UserGroupService userGroupService;
+  @Resource
+  private AuthorityService authorityService;
 
   @Override
   public int queryUserListCount(@NonNull UserQueryFilter filter) {
@@ -121,11 +126,11 @@ public class UserServiceImpl implements UserService {
   }
 
   //填充User的用户组信息
-  private void fillUserInfo(@NonNull User user) {
-    int userId = user.getId();
-    if (userId <= 0) {
+  private void fillUserInfo(User user) {
+    if (user == null || user.getId() <= 0) {
       return;
     }
+    int userId = user.getId();
     List<UserGroup> userGroupList = userGroupService.queryUserGroupListByUserId(user.getId());
     if (userGroupList == null) {
       user = null;
@@ -135,24 +140,29 @@ public class UserServiceImpl implements UserService {
     mergeAuthorities(user);
   }
 
-  //合并用户的权限
   private void mergeAuthorities(User user) {
-    if (user == null) {
+    if (user == null || user.getId() <= 0) {
       return;
     }
     UserRole userRole = user.getUserRole();
+    Set<GrantedAuthority> set = new HashSet<>();
     if (userRole.equals(UserRole.UNKNOWN)) {
       //1、没有任何权限
       user = null;
     } else if (userRole.equals(UserRole.ROLE_NORMAL) || userRole.equals(UserRole.ROLE_ADMIN)) {
       //2、有组权限
-      Set<GrantedAuthority> set = new HashSet<>();
       for (UserGroup userGroup : user.getUserGroups()) {
         set.addAll(userGroup.getAuthorities());
       }
-      user.setAuthorities(new ArrayList<>(set));
     } else if (userRole.equals(UserRole.ROLE_ADMIN)) {
-      //3、TODO:额外享有个人权限，暂时不支持该功能
+      //3、有个人权限
+      List<AuthorityRole> personalRoleList =
+              authorityService.queryDataAuthorityList(new AuthorityQueryFilter(DataType.USER, user.getId()));
+      if (personalRoleList == null) {
+        return;
+      }
+      set.addAll(personalRoleList);
     }
+    user.setAuthorities(new ArrayList<>(set));
   }
 }

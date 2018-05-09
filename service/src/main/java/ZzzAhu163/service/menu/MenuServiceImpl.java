@@ -25,6 +25,13 @@ public class MenuServiceImpl implements MenuService{
             return false;
         }
         menuMapper.insertMenuItem(menuItem);
+        if (menuItem.getId() <= 0) {
+            return false;
+        }
+        if (CollectionUtils.isEmpty(menuItem.getItemAuthorities())) {
+            return true;
+        }
+        //TODO:插入MenuItem的权限
         return menuItem.getId() > 0 ? true : false;
     }
 

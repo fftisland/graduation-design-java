@@ -1,6 +1,6 @@
 package ZzzAhu163.base.user;
 
-import ZzzAhu163.base.baseObject.BaseObject;
+import ZzzAhu163.base.authority.AuthorityRole;
 import ZzzAhu163.base.baseObject.BaseObjectEx;
 import ZzzAhu163.base.baseObject.IsBuildIn;
 import lombok.AllArgsConstructor;

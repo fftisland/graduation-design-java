@@ -1,10 +1,13 @@
 package ZzzAhu163.base.menu;
 
-import ZzzAhu163.base.user.AuthorityRole;
+import ZzzAhu163.base.authority.AuthorityRole;
+import ZzzAhu163.base.user.User;
 import ZzzAhu163.utils.CommonUtils.SharedStringUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 
@@ -29,7 +32,22 @@ public enum SubMenuInfo {
 
     private String description;
 
-    private String icon_type;
+    private String iconType;
 
     private List<AuthorityRole> authorityRoleList;
+
+    public boolean checkUserAuthority(User user) {
+        if(user == null || CollectionUtils.isEmpty(user.getAuthorities())) {
+            return false;
+        }
+        //只要User具有任意一个权限即可访问
+        for (AuthorityRole role : authorityRoleList) {
+            for (GrantedAuthority userRole : user.getAuthorities()) {
+                if (role.equals(userRole)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

@@ -28,7 +28,13 @@ public class SharedWebUtils {
       return null;
     }
     HttpSession session = request.getSession();
+    if (session == null) {
+      return null;
+    }
     SecurityContextImpl impl = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
+    if (impl == null) {
+      return null;
+    }
     Authentication authentication = impl.getAuthentication();
     if (authentication == null) {
       return null;

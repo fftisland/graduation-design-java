@@ -7,29 +7,114 @@
     ${alias}.id, ${alias}.authority, ${alias}.description, ${alias}.create_time
   </sql>
 
-  <resultMap id="AuthorityRoleMap" type="AuthorityRole">
+  <sql id="mapQueryCondition">
+    <where>
+      <if test="dataType != null">
+        AND ${alias}.data_type = #{dataType.code}
+      </if>
+      <if test="dataId > 0">
+        AND ${alias}.data_id = #{dataId}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="queryCondition">
+    <where>
+      <if test="authorityRole != null">
+        <if test="authorityRole.id > 0">
+          AND ${alias}.id = #{authorityRole.id}
+        </if>
+        <if test="authorityRole.name != null and authorityRole.name != ''">
+          AND ${alias}.authority = #{authorityRole.name}
+        </if>
+      </if>
+    </where>
+  </sql>
+
+  <resultMap id="AuthorityResult" type="AuthorityRole">
     <id property="id" column="id"/>
     <result property="name" column="authority"/>
     <result property="description" column="description"/>
     <result property="createTime" column="create_time"/>
   </resultMap>
 
-
-  <!--queryAuthorityRoleIdListByUserGroupId-->
-  <select id="queryAuthorityRoleIdListByUserGroupId" resultType="int">
-    SELECT authority_id FROM user_group_authorities WHERE user_group_id = #{userGroupId}
+  <select id="queryAuthorityRoleListCount" resultType="int">
+    SELECT count(1) FROM authority_list t
+    <include refid="queryCondition">
+      <property name="alias" value="t"/>
+    </include>
   </select>
 
-  <!--queryAuthorityRoleByIdList-->
-  <select id="queryAuthorityRoleByIdList" resultMap="AuthorityRoleMap">
+  <select id="queryAuthorityRoleList" resultMap="AuthorityResult">
+    SELECT
+    <include refid="queryColumns">
+      <property name="alias" value="t"/>
+    </include>
+    FROM authority_list t
+    <include refid="queryCondition">
+      <property name="alias" value="t"/>
+    </include>
+  </select>
+
+  <insert id="insertAuthorityRole" keyProperty="id" useGeneratedKeys="true">
+    INSERT INTO authority_list
+    (
+    authority, description, create_time
+    )
+    VALUES
+    (
+    #{name}, #{description}, now()
+    )
+  </insert>
+
+  <update id="updateAuthorityRole">
+    UPDATE authority_list SET
+    authority = #{name},
+    descrpiton = #{description}
+    WHERE id = #{id}
+  </update>
+
+  <!--authority_data_map-->
+  <insert id="insertDataAuthorityList" useGeneratedKeys="true">
+    INSERT INTO authority_data_map
+    (
+    authority_id, data_id, data_type, create_time
+    )
+    VALUES
+    <foreach collection="authorityRoleList" index="index" item="item" separator=",">
+      (
+      #{item.id}, #{dataId}, #{dataType.code}, now()
+      )
+    </foreach>
+  </insert>
+
+  <delete id="deleteDataAuthorityList">
+    DELETE FROM authority_data_map WHERE
+    data_type = #{dataType.code} AND data_id IN
+    <foreach collection="dataIdList" separator="," item="item" index="index" close=")" open="(">
+      #{item}
+    </foreach>
+  </delete>
+
+  <select id="queryDataAuthorityListCount" resultType="int">
+    SELECT COUNT(1) FROM authority_data_map t
+    <include refid="mapQueryCondition">
+      <property name="alias" value="t"/>
+    </include>
+  </select>
+
+  <select id="queryDataAuthorityList" resultMap="AuthorityResult">
     SELECT
     <include refid="queryColumns">
       <property name="alias" value="t"/>
     </include>
     FROM authority_list t
     WHERE id IN
-    <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
-      #{id}
-    </foreach>
+    (
+    SELECT authority_id FROM authority_data_map u
+    <include refid="mapQueryCondition">
+      <property name="alias" value="u"/>
+    </include>
+    )
   </select>
 </mapper>
