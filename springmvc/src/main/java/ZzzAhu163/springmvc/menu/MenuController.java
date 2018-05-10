@@ -43,12 +43,13 @@ public class MenuController {
         BaseResult baseResult = BaseResult.getSuccessResult();
         try {
             String username = json.getString("username");
-            if (StringUtils.isBlank(username) || SharedWebUtils.getRequestUser(request) == null) {
+            User user = null;
+            if (StringUtils.isBlank(username) || (user = SharedWebUtils.getRequestUser(request)) == null) {
                 throw new Exception("用户未登录");
             }
-            //TODO：取出用户和其对应的权限，构造Menu返回给前端进行回显
-            User user = userService.queryUserByName(username);
+            log.info("用户加载菜单: {}", user);
             Menu menu = getMenu(user);
+            baseResult.setDataItems(menu);
         } catch (Exception e) {
             log.error("/menu/query : {}", e.toString());
             baseResult = BaseResult.getFailedResult(e);
@@ -57,13 +58,20 @@ public class MenuController {
     }
 
     private Menu getMenu(User user) {
+        if (user == null) {
+            return null;
+        }
         Menu menu = new Menu();
         List<GrantedAuthority> userAuthorities = user.getAuthorities();
         for (SubMenuInfo subMenuInfo : SubMenuInfo.values()) {
             SubMenu subMenu = new SubMenu(subMenuInfo);
             if (subMenuInfo.checkUserAuthority(user)) {
-                //TODO:MenuItem
                 List<MenuItem> list = menuService.queryMenuItemListByMenuInfo(subMenuInfo);
+                for (MenuItem item : list) {
+                    if (item.checkAuthority(user)) {
+                        subMenu.addMenuItem(item);
+                    }
+                }
                 menu.addSubMenu(subMenu);
             }
         }

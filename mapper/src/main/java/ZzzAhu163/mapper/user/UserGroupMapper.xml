@@ -85,7 +85,7 @@
 
   <!--insertUserListIntoUserGroup-->
   <!--使用foreach批量插入数据-->
-  <insert id="insertUserListIntoUserGroup">
+  <insert id="insertUserListIntoUserGroup" useGeneratedKeys="true">
     INSERT INTO user_usergroup_map (user_id, user_group_id, create_time)
     VALUE
     <foreach collection="userList" item="item" index="index" separator=",">

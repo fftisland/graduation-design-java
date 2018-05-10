@@ -23,11 +23,13 @@ public class AuthorityQueryFilter extends BaseQueryFilter {
     }
 
     public AuthorityQueryFilter(DataType dataType, int dataId) {
-        super(dataId);
+        super();
+        this.dataId = dataId;
         this.dataType = dataType;
     }
 
     public void reset() {
+        super.reset();
         this.dataType = null;
         this.authorityRole = null;
     }

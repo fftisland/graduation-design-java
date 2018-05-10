@@ -30,7 +30,7 @@ public class HandleController {
     public Object loginSuccessResult(HttpServletRequest request, HttpServletResponse response) {
         BaseResult result = BaseResult.getSuccessResult();
         User user = (User) request.getAttribute("user");
-        log.info("登录认证成功 : {}", user);
+        log.info("登录认证成功 : {}", user.getAuthorityForLog());
         result.setDataItems(user);
         result.setMsg("LOGIN_SUCCESS");
         return result;

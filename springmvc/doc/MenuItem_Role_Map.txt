@@ -1,0 +1,11 @@
+记录MenuItem对应的权限和Url信息:
+
+
+1、用户管理：ROLE_USER_ADMIN
+用户列表 /usermanage/list : ROLE_USER_MANAGE_LIST
+
+2、权限管理：ROLE_AUTHORITY_ADMIN
+权限列表 /authoritymanage/list : ROLE_AUTHORITY_MANAGE_LIST
+
+3、菜单管理：ROLE_MENU_ADMIN
+菜单列表 /menumanage/list : ROLE_MENU_MANAGE_LIST

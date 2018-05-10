@@ -35,12 +35,10 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     if (!StringUtils.equals(userDetails.getPassword(), token.getCredentials().toString())) {
       throw new BadCredentialsException("用户{" + token.getName() + "} 密码输入错误{" + token.getCredentials().toString() + "}");
     }
+    //TODO:查看用户是否具有登陆权限，没有登陆权限直接抛出异常
     return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
   }
 
-  /**
-   * 认证提供类型，主要是让SpringSecurity框架知道你使用了哪个默认实现类
-   **/
   @Override
   public boolean supports(Class<?> aClass) {
     return UsernamePasswordAuthenticationToken.class.equals(aClass);

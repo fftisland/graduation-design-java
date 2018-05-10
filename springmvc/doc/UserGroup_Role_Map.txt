@@ -1,0 +1,9 @@
+GROUP_USER:
+/user/info: ROLE_USER_INFO
+/menu/query: ROLE_MENU_QUERY
+
+GROUP_ADMIN:通常情况下，所有人都是GROUP_USER对对对成员，部分人属于GROUP_ADMIN，享有个人权限
+
+
+GROUP_SUPER_ADMIN:具有ROLE_ALL_ALL_ALL权限，权限狗
+ROLE_ALL_ALL_ALL

@@ -10,8 +10,10 @@ import lombok.NonNull;
 import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +39,18 @@ public class AuthorityServiceImpl implements AuthorityService {
       return false;
     }
     return authorityMapper.updateAuthorityRole(authorityRole) == 1 ? true : false;
+  }
+
+  @Override
+  public AuthorityRole queryAuthorityRoleByName(String name) {
+    if (StringUtils.isEmpty(name)) {
+      return null;
+    }
+    List<AuthorityRole> list = queryAuthorityRoleList(new AuthorityQueryFilter(new AuthorityRole(name)));
+    if (CollectionUtils.isEmpty(list)) {
+      return null;
+    }
+    return list.get(0);
   }
 
   @Override
@@ -67,11 +81,18 @@ public class AuthorityServiceImpl implements AuthorityService {
       return false;
     }
     for (AuthorityRole role : authorityRoleList) {
-      if (role.getId() <= 0) {
+      if (role == null || role.getId() <= 0) {
         return false;
       }
     }
     return authorityMapper.insertDataAuthorityList(dataType, dataId, authorityRoleList) > 0 ? true : false;
+  }
+
+  @Override
+  public boolean insertDataAuthority(DataType dataType, int dataId, AuthorityRole authorityRole) {
+    List<AuthorityRole> list = new ArrayList<>();
+    list.add(authorityRole);
+    return insertDataAuthorityList(dataType, dataId, list);
   }
 
   @Override

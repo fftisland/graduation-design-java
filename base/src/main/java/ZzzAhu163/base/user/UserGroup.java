@@ -34,6 +34,11 @@ public class UserGroup extends BaseObjectEx{
     super(id);
   }
 
+  public UserGroup(UserGroupType userGroupType) {
+    super();
+    this.userGroupType = userGroupType;
+  }
+
   public void reset() {
     super.reset();
     this.userGroupType = null;

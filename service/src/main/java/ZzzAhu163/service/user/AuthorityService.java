@@ -16,12 +16,16 @@ public interface AuthorityService {
 
   boolean updateAuthorityRole(AuthorityRole authorityRole);
 
+  AuthorityRole queryAuthorityRoleByName(String name);
+
   List<AuthorityRole> queryAuthorityRoleList(AuthorityQueryFilter filter);
 
   int queryAuthorityRoleListCount(AuthorityQueryFilter filter);
 
   /********************Authority Map***************************/
   boolean insertDataAuthorityList(DataType dataType, int dataId, List<AuthorityRole> authorityRoleList);
+
+  boolean insertDataAuthority(DataType dataType, int dataId, AuthorityRole authorityRole);
 
   boolean deleteDataAuthorityList(DataType dataType, List<Integer> dataIdList);
 

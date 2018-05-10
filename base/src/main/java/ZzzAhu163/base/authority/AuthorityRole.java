@@ -28,6 +28,12 @@ public class AuthorityRole  extends BaseObjectEx implements GrantedAuthority{
         setName(name);
     }
 
+    public AuthorityRole(String name, String description) {
+        super();
+        setName(name);
+        setDescription(description);
+    }
+
     @Override
     public String getAuthority() {
         return getName();

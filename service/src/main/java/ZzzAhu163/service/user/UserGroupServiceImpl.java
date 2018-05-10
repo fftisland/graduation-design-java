@@ -13,6 +13,8 @@ import lombok.NonNull;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -42,12 +44,18 @@ public class UserGroupServiceImpl implements UserGroupService {
   }
 
   @Override
-  public int queryUserGroupListCount(@NonNull UserGroupQueryFilter filter) {
+  public int queryUserGroupListCount(UserGroupQueryFilter filter) {
+    if (filter == null) {
+      return 0;
+    }
     return userGroupMapper.queryUserGroupListCount(filter);
   }
 
   @Override
-  public List<UserGroup> querySimpleUserGroupList(@NonNull UserGroupQueryFilter filter) {
+  public List<UserGroup> querySimpleUserGroupList(UserGroupQueryFilter filter) {
+    if (filter == null) {
+      return null;
+    }
     int count = 0;
     count = queryUserGroupListCount(filter);
     if (count <= 0) {
@@ -57,8 +65,8 @@ public class UserGroupServiceImpl implements UserGroupService {
   }
 
   @Override
-  public List<UserGroup> querySimpleUserGroupByIdList(@NonNull List<Integer> idList) {
-    if (idList.size() == 0) {
+  public List<UserGroup> querySimpleUserGroupByIdList(List<Integer> idList) {
+    if (CollectionUtils.isEmpty(idList)) {
       return null;
     }
     return userGroupMapper.querySimpleUserGroupListByIdList(idList);
@@ -74,6 +82,7 @@ public class UserGroupServiceImpl implements UserGroupService {
 
   @Override
   public List<UserGroup> querySimpleUserGroupListByUserId(int userId) {
+    //TODO:好蠢的代码，以后再改。
     //先查询UserGroupIdList
     List<Integer> idList = queryUserGroupIdListByUserId(userId);
     //再根据idList查询UserGroup
@@ -119,6 +128,13 @@ public class UserGroupServiceImpl implements UserGroupService {
     }
     int count = userGroupMapper.insertUserListIntoUserGroup(userList, userGroupId);
     return count > 0 ? true : false;
+  }
+
+  @Override
+  public Boolean insertUserIntoUserGroup(User user, UserGroupType userGroupType) {
+    List<User> list = new ArrayList<>();
+    list.add(user);
+    return insertUserListIntoUserGroup(list, userGroupType);
   }
 
   @Override

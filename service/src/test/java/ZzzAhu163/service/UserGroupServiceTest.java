@@ -7,6 +7,7 @@ import ZzzAhu163.base.user.UserGroup;
 import ZzzAhu163.base.user.UserGroupType;
 import ZzzAhu163.base.user.filter.UserGroupQueryFilter;
 import ZzzAhu163.service.user.UserGroupService;
+import ZzzAhu163.service.user.UserService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -69,4 +70,10 @@ public class UserGroupServiceTest extends AbstractTest {
     int id = userGroupService.queryUserGroupIdByType(type);
     log.info("查询结果:{}", id);
   }
+
+  @Test
+  public void queryUserGroupTest() {
+    UserGroupQueryFilter filter = new UserGroupQueryFilter(new UserGroup(UserGroupType.GROUP_SUPER_ADMIN));
+  }
+
 }

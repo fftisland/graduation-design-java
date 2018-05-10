@@ -42,6 +42,8 @@ public interface UserGroupService {
   /**insert user list into userGroup**/
   Boolean insertUserListIntoUserGroup(List<User> userList, UserGroupType userGroupType);
 
+  Boolean insertUserIntoUserGroup(User user, UserGroupType userGroupType);
+
   /**query user group id by userGroupType**/
   int queryUserGroupIdByType(UserGroupType type);
 }

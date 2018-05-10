@@ -7,8 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.util.CollectionUtils;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -65,5 +67,29 @@ public class User extends BaseObject {
     this.updateTime = null;
     this.userGroups = new ArrayList<>();
     this.authorities = new ArrayList<>();
+  }
+
+  public List<String> getAuthorityForLog() {
+    if (CollectionUtils.isEmpty(getAuthorities())) {
+      return null;
+    }
+    List<String> list = new ArrayList<>();
+    for (GrantedAuthority grantedAuthority : authorities) {
+      list.add(grantedAuthority.getAuthority());
+    }
+    return list;
+  }
+
+  public boolean hasAuthority(String name) {
+    if (StringUtils.isBlank(name) || authorities == null) {
+      return false;
+    }
+    AuthorityRole authorityRole = new AuthorityRole(name);
+    for (GrantedAuthority grantedAuthority : authorities) {
+      if (authorityRole.equals(grantedAuthority)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
