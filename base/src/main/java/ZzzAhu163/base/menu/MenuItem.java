@@ -5,10 +5,10 @@ import ZzzAhu163.base.authority.AuthorityRole;
 import ZzzAhu163.base.user.User;
 import lombok.Data;
 import lombok.ToString;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,19 +62,16 @@ public class MenuItem extends BaseObjectEx{
         itemAuthorities.add(role);
     }
 
-    public boolean checkAuthority(User user) {
-        if (CollectionUtils.isEmpty(itemAuthorities)) {
-            return true;
-        }
-        if (user == null || CollectionUtils.isEmpty(user.getAuthorities())) {
+    public boolean checkUserAuthority(User user) {
+        if (user == null) {
             return false;
         }
-        if (user.hasAuthority("ROLE_ALL_ALL_ALL")) {
+        if (CollectionUtils.isEmpty(itemAuthorities) ||  user.hasAuthority("ROLE_ALL_ALL_ALL")) {
             return true;
         }
-        for (AuthorityRole role : itemAuthorities) {
-            for (GrantedAuthority userRole : user.getAuthorities()) {
-                if (role.equals(userRole)) {
+        for (GrantedAuthority grantedAuthority : user.getAuthorities()) {
+            for (AuthorityRole role : itemAuthorities) {
+                if (role.equals(grantedAuthority)) {
                     return true;
                 }
             }

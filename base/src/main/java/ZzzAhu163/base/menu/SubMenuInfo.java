@@ -37,13 +37,18 @@ public enum SubMenuInfo {
     private List<AuthorityRole> authorityRoleList;
 
     public boolean checkUserAuthority(User user) {
-        if(user == null || CollectionUtils.isEmpty(user.getAuthorities())) {
+        //user不能为空说明一定要是登陆状态
+        if (user == null) {
             return false;
         }
-        //只要User具有任意一个权限即可访问
-        for (AuthorityRole role : authorityRoleList) {
-            for (GrantedAuthority userRole : user.getAuthorities()) {
-                if (role.equals(userRole)) {
+        //authorityRoleList为空说明不需要任何权限
+        if (CollectionUtils.isEmpty(authorityRoleList) || user.hasAuthority("ROLE_ALL_ALL_ALL")) {
+            return true;
+        }
+        //由于已经验证了authorityRoleList可能为空，所以将其放在内部循环
+        for (GrantedAuthority grantedAuthority : user.getAuthorities()) {
+            for (AuthorityRole role : authorityRoleList) {
+                if (role.equals(grantedAuthority)) {
                     return true;
                 }
             }

@@ -9,6 +9,8 @@
   <!-- 不需要进行安全认证的资源 -->
   <http pattern="/resources/**" security="none" />
   <http pattern="/login.jsp" security="none" />
+  <http pattern="/user/register" security="none" />
+
   <!--login-processing-url不要设置为none，否则将不会拦截这个请求-->
 
   <!--auto-config设为true则会使用SpringSecurity的默认配置-->

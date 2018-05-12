@@ -62,13 +62,12 @@ public class MenuController {
             return null;
         }
         Menu menu = new Menu();
-        List<GrantedAuthority> userAuthorities = user.getAuthorities();
         for (SubMenuInfo subMenuInfo : SubMenuInfo.values()) {
             SubMenu subMenu = new SubMenu(subMenuInfo);
             if (subMenuInfo.checkUserAuthority(user)) {
                 List<MenuItem> list = menuService.queryMenuItemListByMenuInfo(subMenuInfo);
                 for (MenuItem item : list) {
-                    if (item.checkAuthority(user)) {
+                    if (item.checkUserAuthority(user)) {
                         subMenu.addMenuItem(item);
                     }
                 }
