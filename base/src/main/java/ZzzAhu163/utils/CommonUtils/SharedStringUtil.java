@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Zzz_Ahu_163
@@ -34,10 +35,24 @@ public class SharedStringUtil {
     /**
      * pattern => current time string
      * **/
-    public static String formatTime(String format) {
+    public static String formatTime(String format, Date date) {
         if (StringUtils.isBlank(format)) {
             return null;
         }
+        if (date != null) {
+            return new SimpleDateFormat(format).format(date);
+        }
         return new SimpleDateFormat(format).format(new Date());
+    }
+
+    /**
+     * random string by uuid and timestamp
+     * **/
+    public static String getRandomString() {
+        StringBuilder builder = new StringBuilder();
+        String prefix = formatTime("yyyyMMdd_HHmmss", null);
+        String postfix = UUID.randomUUID().toString().substring(0, 8);
+        builder.append(prefix).append("_").append(postfix);
+        return builder.toString();
     }
 }

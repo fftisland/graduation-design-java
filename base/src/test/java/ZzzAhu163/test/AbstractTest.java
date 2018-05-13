@@ -1,4 +1,4 @@
-//package ZzzAhu163.test;
+package ZzzAhu163.test;
 //
 //import ZzzAhu163.base.firstentity.*;
 //import ZzzAhu163.base.firstentity.Aspecj.AspectIntroduce;
@@ -6,29 +6,29 @@
 //import ZzzAhu163.base.firstentity.BeanValidationLearning.StringNotEmpty;
 //import ZzzAhu163.base.firstentity.BeanValidationLearning.StringNotEmptyBean;
 //import ZzzAhu163.base.firstentity.SpringAop.*;
-//import ZzzAhu163.utils.BeanValidationUtil.BeanValidationUtil;
-//import ZzzAhu163.utils.ConstValue.SharedPropertiesProvider;
-//import lombok.extern.slf4j.Slf4j;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.omg.CosNaming.NamingContextPackage.NotEmpty;
-//import org.springframework.aop.framework.ProxyFactory;
-//import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
-//import org.springframework.aop.support.RegexpMethodPointcutAdvisor;
-//import org.springframework.cglib.proxy.Enhancer;
-//import org.springframework.test.context.ContextConfiguration;
-//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ZzzAhu163.utils.BeanValidationUtil.BeanValidationUtil;
+import ZzzAhu163.utils.ConstValue.SharedPropertiesProvider;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.omg.CosNaming.NamingContextPackage.NotEmpty;
+import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
+import org.springframework.aop.support.RegexpMethodPointcutAdvisor;
+import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.annotation.Resource;
+import java.lang.reflect.Proxy;
 //
-//import javax.annotation.Resource;
-//import java.lang.reflect.Proxy;
-//
-///**
-// *测试类通用模板
-// **/
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration("classpath:base-spring-config.xml")
-//@Slf4j
-//public class AbstractTest {
+/**
+ *测试类通用模板
+ **/
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:base-spring-config.xml")
+@Slf4j
+public class AbstractTest {
 //  @Resource
 //  SharedPropertiesProvider sharedPropertiesProvider;
 //
@@ -191,4 +191,4 @@
 //    String message = beanValidationUtil.validate(bean);
 //    log.info("验证结果：{}", message);
 //  }
-//}
+}
