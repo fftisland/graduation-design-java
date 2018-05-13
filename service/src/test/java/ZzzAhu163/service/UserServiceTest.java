@@ -83,4 +83,11 @@ public class UserServiceTest extends AbstractTest {
       log.info("持久化数据：{}", user);
     }
   }
+
+  @Test
+  public void queryUserByNameTest() {
+    String name = "赵子彰1";
+    User user = userService.queryUserByName(name);
+    log.info("查询结果: {}", user.getAuthorityForLog());
+  }
 }

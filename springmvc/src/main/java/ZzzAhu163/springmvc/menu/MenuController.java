@@ -47,7 +47,7 @@ public class MenuController {
             if (StringUtils.isBlank(username) || (user = SharedWebUtils.getRequestUser(request)) == null) {
                 throw new Exception("用户未登录");
             }
-            log.info("用户加载菜单: {}", user);
+            log.info("{}:加载菜单   权限:{}", user.getName(), user.getAuthorityForLog());
             Menu menu = getMenu(user);
             baseResult.setDataItems(menu);
         } catch (Exception e) {

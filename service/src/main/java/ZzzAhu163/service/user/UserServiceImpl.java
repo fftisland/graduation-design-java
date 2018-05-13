@@ -5,15 +5,13 @@ import ZzzAhu163.base.authority.AuthorityRole;
 import ZzzAhu163.base.authority.DataType;
 import ZzzAhu163.base.user.*;
 import ZzzAhu163.base.user.filter.UserQueryFilter;
-import ZzzAhu163.mapper.user.UserGroupMapper;
 import ZzzAhu163.mapper.user.UserServiceMapper;
 import lombok.Data;
 import lombok.NonNull;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -133,7 +131,6 @@ public class UserServiceImpl implements UserService {
     int userId = user.getId();
     List<UserGroup> userGroupList = userGroupService.queryUserGroupListByUserId(user.getId());
     if (userGroupList == null) {
-      user = null;
       return;
     }
     user.setUserGroups(userGroupList);
@@ -146,23 +143,29 @@ public class UserServiceImpl implements UserService {
     }
     UserRole userRole = user.getUserRole();
     Set<GrantedAuthority> set = new HashSet<>();
-    if (userRole.equals(UserRole.UNKNOWN)) {
+    if (UserRole.UNKNOWN.equals(userRole)) {
       //1、没有任何权限
-      user = null;
-    } else if (userRole.equals(UserRole.ROLE_NORMAL) || userRole.equals(UserRole.ROLE_ADMIN)) {
+      user.setAuthorities(null);
+      return;
+    }
+    if (UserRole.ROLE_NORMAL.equals(userRole) || UserRole.ROLE_ADMIN.equals(userRole)) {
       //2、有组权限
       for (UserGroup userGroup : user.getUserGroups()) {
-        set.addAll(userGroup.getAuthorities());
+        if (CollectionUtils.isNotEmpty(userGroup.getAuthorities())) {
+          set.addAll(userGroup.getAuthorities());
+        }
       }
-    } else if (userRole.equals(UserRole.ROLE_ADMIN)) {
+    }
+    if (UserRole.ROLE_ADMIN.equals(userRole)) {
       //3、有个人权限
       List<AuthorityRole> personalRoleList =
               authorityService.queryDataAuthorityList(new AuthorityQueryFilter(DataType.USER, user.getId()));
-      if (personalRoleList == null) {
-        return;
+      if (CollectionUtils.isNotEmpty(personalRoleList)) {
+        set.addAll(personalRoleList);
       }
-      set.addAll(personalRoleList);
     }
-    user.setAuthorities(new ArrayList<>(set));
+    if (CollectionUtils.isNotEmpty(set)) {
+      user.setAuthorities(new ArrayList<>(set));
+    }
   }
 }

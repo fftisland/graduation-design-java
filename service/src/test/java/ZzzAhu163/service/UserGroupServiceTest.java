@@ -75,5 +75,10 @@ public class UserGroupServiceTest extends AbstractTest {
   public void queryUserGroupTest() {
     UserGroupQueryFilter filter = new UserGroupQueryFilter(new UserGroup(UserGroupType.GROUP_SUPER_ADMIN));
   }
-
+  @Test
+  public void queryUserGroupByUserIdTest() {
+    int userId = 7;
+    List<UserGroup> list = userGroupService.queryUserGroupListByUserId(userId);
+    log.info("查询结果: {}", list);
+  }
 }

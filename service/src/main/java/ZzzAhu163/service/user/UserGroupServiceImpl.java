@@ -93,19 +93,14 @@ public class UserGroupServiceImpl implements UserGroupService {
   @Override
   public List<UserGroup> queryUserGroupListByUserId(int userId) {
     List<UserGroup> simpleUserGroupList = querySimpleUserGroupListByUserId(userId);
-    if (simpleUserGroupList == null) {
+    if (CollectionUtils.isEmpty(simpleUserGroupList)) {
       return null;
     }
-
     for (UserGroup userGroup : simpleUserGroupList) {
       List<AuthorityRole> authorityRoleList =
               authorityService.queryDataAuthorityList(new AuthorityQueryFilter(DataType.USER_GROUP, userGroup.getId()));
-      if (authorityRoleList == null) {
-        return null;
-      }
       userGroup.setAuthorities(authorityRoleList);
     }
-
     return simpleUserGroupList;
   }
 
