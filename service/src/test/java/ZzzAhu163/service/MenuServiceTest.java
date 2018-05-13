@@ -4,7 +4,9 @@ import ZzzAhu163.AbstractTest;
 import ZzzAhu163.base.menu.MenuItem;
 import ZzzAhu163.base.menu.SubMenuInfo;
 import ZzzAhu163.base.menu.filter.MenuQueryFilter;
+import ZzzAhu163.base.user.User;
 import ZzzAhu163.service.menu.MenuService;
+import ZzzAhu163.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -14,7 +16,9 @@ import java.util.List;
 @Slf4j
 public class MenuServiceTest extends AbstractTest {
     @Resource
-    MenuService menuService;
+    private MenuService menuService;
+    @Resource
+    private UserService userService;
 
     @Test
     public void insertTest() {
@@ -77,5 +81,12 @@ public class MenuServiceTest extends AbstractTest {
         menuItem.setName("更新用例");
         boolean result = menuService.updateMenuItem(menuItem);
         log.info("更新结果 : {}", result);
+    }
+
+    @Test
+    public void getUserMenuTest() {
+        String name = "赵子彰1";
+        User user = userService.queryUserByName(name);
+        log.info("用户权限: {}", user.getAuthorityForLog());
     }
 }

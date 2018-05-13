@@ -1,5 +1,6 @@
 package ZzzAhu163.service.menu;
 
+import ZzzAhu163.base.authority.AuthorityQueryFilter;
 import ZzzAhu163.base.authority.AuthorityRole;
 import ZzzAhu163.base.authority.DataType;
 import ZzzAhu163.base.menu.Menu;
@@ -69,7 +70,13 @@ public class MenuServiceImpl implements MenuService{
             return null;
         }
         List<MenuItem> list = menuMapper.queryMenuItemListByFilter(filter);
-        return CollectionUtils.isEmpty(list) ? null : list;
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
+        for (MenuItem item : list) {
+            item.setItemAuthorities(authorityService.queryDataAuthorityList(new AuthorityQueryFilter(DataType.MENU_ITEM, item.getId())));
+        }
+        return list;
     }
 
     @Override

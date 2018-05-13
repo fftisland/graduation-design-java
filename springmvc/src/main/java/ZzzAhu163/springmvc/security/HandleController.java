@@ -2,6 +2,7 @@ package ZzzAhu163.springmvc.security;
 
 import ZzzAhu163.base.baseResult.BaseResult;
 import ZzzAhu163.base.user.User;
+import ZzzAhu163.utils.CommonUtils.SharedStringUtil;
 import ZzzAhu163.utils.SharedWebUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,12 +43,26 @@ public class HandleController {
      * **/
     @RequestMapping("/failed")
     @ResponseBody
-    public Object loginFailedResuslt(HttpServletRequest request, HttpServletResponse response) {
+    public Object loginFailedResult(HttpServletRequest request, HttpServletResponse response) {
         BaseResult result = BaseResult.getSuccessResult();
         Exception e = (Exception) request.getAttribute("exception");
         log.info("登录认证失败 : {}", e.toString());
         result.setDataItems(e.toString());
         result.setMsg("LOGIN_FAILED");
+        return result;
+    }
+
+    /**
+     * 返回注销成功的信息
+     * **/
+    @RequestMapping("/logout")
+    @ResponseBody
+    public Object logoutSuccessResult(HttpServletRequest request, HttpServletResponse response) {
+        BaseResult result = BaseResult.getSuccessResult();
+        String userName = (String) request.getAttribute("userName");
+        log.info("{} 退出登录 {}", userName, SharedStringUtil.formatTime("yyyy-MM-dd HH:mm:ss"));
+        result.setDataItems(userName);
+        result.setMsg("LOGOUT_SUCCESS");
         return result;
     }
 }
