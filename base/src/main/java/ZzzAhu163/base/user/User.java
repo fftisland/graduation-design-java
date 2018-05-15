@@ -2,6 +2,7 @@ package ZzzAhu163.base.user;
 
 import ZzzAhu163.base.authority.AuthorityRole;
 import ZzzAhu163.base.baseObject.BaseObject;
+import ZzzAhu163.base.baseObject.BaseObjectEx;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +26,7 @@ import java.util.*;
 @Builder()
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class User extends BaseObject {
+public class User extends BaseObjectEx {
 
   private String email;
 
@@ -36,10 +37,6 @@ public class User extends BaseObject {
   private int loginCount;
 
   private Timestamp lastLoginTime;
-
-  private Timestamp createTime;
-
-  private Timestamp updateTime;
 
   private List<UserGroup> userGroups;
 
@@ -63,8 +60,6 @@ public class User extends BaseObject {
     this.userRole = null;
     this.loginCount = 0;
     this.lastLoginTime = null;
-    this.createTime = null;
-    this.updateTime = null;
     this.userGroups = new ArrayList<>();
     this.authorities = new ArrayList<>();
   }
@@ -87,6 +82,26 @@ public class User extends BaseObject {
     AuthorityRole authorityRole = new AuthorityRole(name);
     for (GrantedAuthority grantedAuthority : authorities) {
       if (authorityRole.equals(grantedAuthority)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * 只要名字或者邮箱相同就认为是同一个user
+   * **/
+  public boolean equals(User user) {
+    if (user == null) {
+      return false;
+    }
+    if (StringUtils.isNotBlank(getName())) {
+      if (getName().equals(user.getName())) {
+        return true;
+      }
+    }
+    if (StringUtils.isNotBlank(email)) {
+      if (email.equals(user.getEmail())) {
         return true;
       }
     }

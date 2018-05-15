@@ -13,10 +13,12 @@ import org.apache.commons.lang3.StringUtils;
 @Getter
 @AllArgsConstructor
 public enum ContactType {
+    WITHOUT_TYPE(0, "WITHOUT_TYPE", "普通联系人组，不需要标注特别类型"),
     BACK_END(1, "BACK_END", "服务端"),
     FORE_EDN(2, "FORE_EDN", "前端"),
     CLIENT_END(3, "CLIENT_END", "客户端"),
-    CS_BASE(4, "CS_BASE", "计算机基础");
+    CS_BASE(4, "CS_BASE", "计算机基础"),
+    ARTICLE(5, "ARTICLE", "文章链接");
 
     private int code;
     private String name;
