@@ -15,7 +15,7 @@ public class ContactGroupServiceImpl implements ContactGroupService {
 
     @Override
     public boolean insertContactGroup(ContactGroup contactGroup) {
-        if (contactGroup == null || contactGroup.getContactType() == null || contactGroup.getId() > 0) {
+        if (contactGroup == null || contactGroup.getId() > 0) {
             return false;
         }
         contactGroupMapper.insertContactGroup(contactGroup);

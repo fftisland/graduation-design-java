@@ -36,9 +36,8 @@ public class ContactGrpupServiceTest extends AbstractTest {
     @Test
     public void queryTest() {
         ContactGroupQueryFilter filter = new ContactGroupQueryFilter();
-        filter.setId(1);
-        filter.setContactType(ContactType.WITHOUT_TYPE);
-        filter.setName("20180515_135304_0a4fcde5");
+        filter.setId(18);
+        filter.setName("20180516_100643_3e2b4e82");
         List<ContactGroup> list = contactGroupService.queryContactGroupList(filter);
         if (CollectionUtils.isNotEmpty(list)) {
             log.info("查询结果： {}", list.get(0).formatForLog());
@@ -49,7 +48,7 @@ public class ContactGrpupServiceTest extends AbstractTest {
 
     @Test
     public void queryById() {
-        int id = 17;
+        int id = 18;
         ContactGroup contactGroup = contactGroupService.queryContactGroupById(id);
         if (contactGroup != null) {
             log.info("查询结果 : {}", contactGroup.formatForLog());
@@ -60,18 +59,18 @@ public class ContactGrpupServiceTest extends AbstractTest {
 
     @Test
     public void deleteTest() {
-        int id = 16;
+        int id = 17;
         boolean result = contactGroupService.deleteContactGroup(id);
         log.info("删除结果：{}", result);
     }
 
     @Test
     public void updateContactGroup() {
-        int id = 17;
+        int id = 18;
         ContactGroup contactGroup = contactGroupService.queryContactGroupById(id);
         log.info("更新之前:{}", contactGroup.formatForLog());
         User user = userService.queryUserByName("赵子彰2");
-        contactGroup.addUserToList(UserListType.TO_LIST, user);
+        contactGroup.addUserToList(UserListType.BCC_LIST, user);
         boolean result = contactGroupService.updateContactGroup(contactGroup);
         log.info("更新结果: {} , 更新之后: {}", result, contactGroup.formatForLog());
     }

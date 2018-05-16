@@ -8,8 +8,6 @@ import lombok.Data;
  * **/
 @Data
 public class ContactGroupQueryFilter extends BaseQueryFilter {
-    private ContactType contactType;
-
     public ContactGroupQueryFilter() {
         super();
     }
@@ -20,6 +18,5 @@ public class ContactGroupQueryFilter extends BaseQueryFilter {
 
     public void reset() {
         super.reset();
-        this.contactType = null;
     }
 }

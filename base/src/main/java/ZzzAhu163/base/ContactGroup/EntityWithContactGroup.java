@@ -20,9 +20,6 @@ public class EntityWithContactGroup extends BaseObjectEx implements ContactUserO
     /**联系人组**/
     private ContactGroup contactGroup;
 
-    /**联系人组数据类型**/
-    private ContactType contactType;
-
     public void reset() {
         super.reset();
         this.contactGroup = null;
@@ -32,18 +29,10 @@ public class EntityWithContactGroup extends BaseObjectEx implements ContactUserO
         super();
     }
 
-    public EntityWithContactGroup(ContactType contactType) {
-        super();
-        this.contactType = contactType;
-    }
-
     @Override
     public void addUserToList(UserListType userListType, User user) {
         if (contactGroup == null) {
-            if (contactType == null) {
-                return;
-            }
-            contactGroup = new ContactGroup(contactType);
+            contactGroup = new ContactGroup();
         }
         contactGroup.addUserToList(userListType, user);
     }

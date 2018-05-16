@@ -5,14 +5,13 @@
 <mapper namespace="ZzzAhu163.mapper.ContactGroup.ContactGroupMapper">
     <sql id="queryColumns">
         ${alias}.id, ${alias}.name, ${alias}.description,
-        ${alias}.entity_type, ${alias}.create_time, ${alias}.update_time
+        ${alias}.create_time, ${alias}.update_time
     </sql>
 
     <resultMap id="ContactGroupResult" type="ContactGroup">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="description" column="description"/>
-        <result property="contactType" column="entity_type" typeHandler="ZzzAhu163.base.ContactGroup.ContactTypeHandler"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <collection property="baseContactObject.toList" column="{contact_group_id=id, user_list_type=to_user_list}"
@@ -31,9 +30,6 @@
 
     <sql id="queryCondition">
         <where>
-            <if test="contactType != null">
-                AND ${alias}.entity_type = #{contactType.code}
-            </if>
             <if test="id > 0">
                 AND ${alias}.id = #{id}
             </if>
@@ -46,11 +42,11 @@
     <insert id="insertContactGroup" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO contact_group_list
         (
-        name, description, entity_type, create_time, update_time
+        name, description, create_time, update_time
         )
         VALUES
         (
-        #{name}, #{description}, #{contactType.code}, now(), now()
+        #{name}, #{description}, now(), now()
         )
     </insert>
 

@@ -18,11 +18,6 @@ import java.util.List;
 public class ContactGroup extends BaseObjectEx implements ContactUserOperation{
 
     /**
-     * 联系人组的类型
-     * **/
-    private ContactType contactType;
-
-    /**
      * 联系人组实体
      * **/
     private BaseContactObject baseContactObject;
@@ -31,14 +26,8 @@ public class ContactGroup extends BaseObjectEx implements ContactUserOperation{
         super();
     }
 
-    public ContactGroup(ContactType contactType) {
-        super();
-        this.contactType = contactType;
-    }
-
     public void reset() {
         super.reset();
-        this.contactType = ContactType.WITHOUT_TYPE;
         this.baseContactObject = new BaseContactObject();
     }
 

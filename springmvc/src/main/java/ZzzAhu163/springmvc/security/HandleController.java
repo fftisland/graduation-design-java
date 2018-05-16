@@ -60,7 +60,7 @@ public class HandleController {
     public Object logoutSuccessResult(HttpServletRequest request, HttpServletResponse response) {
         BaseResult result = BaseResult.getSuccessResult();
         String userName = (String) request.getAttribute("userName");
-        log.info("{} 退出登录 {}", userName, SharedStringUtil.formatTime("yyyy-MM-dd HH:mm:ss"));
+        log.info("{} 退出登录 {}", userName, SharedStringUtil.formatTime("yyyy-MM-dd HH:mm:ss", null));
         result.setDataItems(userName);
         result.setMsg("LOGOUT_SUCCESS");
         return result;
