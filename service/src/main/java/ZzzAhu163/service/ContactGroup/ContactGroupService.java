@@ -1,7 +1,7 @@
 package ZzzAhu163.service.ContactGroup;
 
 import ZzzAhu163.base.ContactGroup.ContactGroup;
-import ZzzAhu163.base.ContactGroup.ContactGroupQueryFilter;
+import ZzzAhu163.base.ContactGroup.filter.ContactGroupQueryFilter;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * @author Zzz_Ahu_163
  * 联系人组中关于User的操作:
- * EntityWithContactGroup => ContactGroup => BaseContactObject
+ * EntityContactGroup => ContactGroup => BaseContactObject
  * **/
 public interface ContactUserOperation {
     void addUserToList(UserListType userListType, User user);

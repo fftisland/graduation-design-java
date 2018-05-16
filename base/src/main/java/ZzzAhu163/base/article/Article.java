@@ -1,6 +1,6 @@
 package ZzzAhu163.base.article;
 
-import ZzzAhu163.base.ContactGroup.EntityWithContactGroup;
+import ZzzAhu163.base.ContactGroup.EntityContactGroup;
 import ZzzAhu163.base.user.User;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
@@ -11,7 +11,7 @@ import org.apache.ibatis.type.Alias;
  * **/
 @Alias("Article")
 @Data
-public class Article extends EntityWithContactGroup {
+public class Article extends EntityContactGroup {
     /**文章链接**/
     private String articleUrl;
 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ZzzAhu163.mapper.ContactGroup.EntityContactGroupMapper">
+    <sql id="queryColumns">
+        ${alias}.entity_id, ${alias}.contact_group_id, ${alias}.entity_type,
+        ${alias}.create_time, ${alias}.update_time
+    </sql>
+
+    <sql id="queryCondition">
+        <where>
+            <if test="entityType != null">
+               AND ${alias}.entity_type = #{entityType.code}
+            </if>
+            <if test="id >= 0">
+               AND ${alias}.entity_id = #{id}
+            </if>
+        </where>
+    </sql>
+    
+    <resultMap id="EntityContactGroupResult" type="EntityContactGroup">
+        <result property="id" column="entity_id"/>
+        <result property="contactGroup.id" column="contact_group_id"/>
+        <result property="entityType" column="entity_type" typeHandler="ZzzAhu163.base.ContactGroup.typehandler.EntityTypeHanlder"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <insert id="insertEntityContactGroup" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO entity_contact_group_list
+        (
+        entity_id, contact_group_id, entity_type, create_time, update_time
+        )
+        VALUES
+        (
+        #{id}, #{contactGroup.id}, #{entityType.code}, now(), now()
+        )
+    </insert>
+
+    <delete id="deleteEntityContactGroup">
+        DELETE FROM entity_contact_group_list
+        WHERE
+        entity_id = #{entityId}
+        AND
+        entity_type = #{entityType.code}
+    </delete>
+
+    <select id="queryEntityContactGroupListCount" resultType="int">
+        SELECT COUNT(1) FROM entity_contact_group_list t
+        <include refid="queryCondition">
+            <property name="alias" value="t"/>
+        </include>
+    </select>
+
+    <select id="queryEntityContactGroupList" resultMap="EntityContactGroupResult">
+        SELECT
+        <include refid="queryColumns">
+            <property name="alias" value="t"/>
+        </include>
+        FROM entity_contact_group_list t
+        <include refid="queryCondition">
+            <property name="alias" value="t"/>
+        </include>
+    </select>
+
+    <update id="updateEntityContactGroup">
+        UPDATE entity_contact_group_list
+        SET
+        contact_group_id = #{contactGroup.id},
+        update_time = now()
+        WHERE
+        entity_id = #{id}
+        AND
+        entity_type = #{entityType.code}
+    </update>
+</mapper>

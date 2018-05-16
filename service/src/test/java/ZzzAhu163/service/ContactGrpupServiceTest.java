@@ -2,6 +2,7 @@ package ZzzAhu163.service;
 
 import ZzzAhu163.AbstractTest;
 import ZzzAhu163.base.ContactGroup.*;
+import ZzzAhu163.base.ContactGroup.filter.ContactGroupQueryFilter;
 import ZzzAhu163.base.user.User;
 import ZzzAhu163.service.ContactGroup.ContactGroupService;
 import ZzzAhu163.service.user.UserService;

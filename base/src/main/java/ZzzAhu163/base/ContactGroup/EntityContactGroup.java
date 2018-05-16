@@ -15,18 +15,29 @@ import java.util.List;
  * **/
 
 @Data
-@Alias("EntityWithContactGroup")
-public class EntityWithContactGroup extends BaseObjectEx implements ContactUserOperation{
+@Alias("EntityContactGroup")
+public class EntityContactGroup extends BaseObjectEx implements ContactUserOperation{
     /**联系人组**/
     private ContactGroup contactGroup;
 
+    /**类型**/
+    private EntityType entityType;
+
     public void reset() {
         super.reset();
-        this.contactGroup = null;
+        contactGroup = new ContactGroup();
+        entityType = null;
     }
 
-    public EntityWithContactGroup() {
+    public EntityContactGroup() {
         super();
+    }
+
+    public boolean isEmpty() {
+        if (entityType == null || getId() <=  0 || isUserListEmpty()) {
+            return true;
+        }
+        return false;
     }
 
     @Override

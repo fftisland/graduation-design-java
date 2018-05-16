@@ -32,12 +32,15 @@ public class UserServiceImpl implements UserService {
   private AuthorityService authorityService;
 
   @Override
-  public int queryUserListCount(@NonNull UserQueryFilter filter) {
+  public int queryUserListCount(UserQueryFilter filter) {
+    if (filter == null) {
+      return 0;
+    }
     return userServiceMapper.queryUserListCount(filter);
   }
 
   @Override
-  public List<User> querySimpleUserList(@NonNull UserQueryFilter filter) {
+  public List<User> querySimpleUserList(UserQueryFilter filter) {
     int count = queryUserListCount(filter);
     if (count <= 0) {
       return null;

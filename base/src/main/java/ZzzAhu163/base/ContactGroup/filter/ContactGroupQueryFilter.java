@@ -1,4 +1,4 @@
-package ZzzAhu163.base.ContactGroup;
+package ZzzAhu163.base.ContactGroup.filter;
 
 import ZzzAhu163.base.baseObject.BaseQueryFilter;
 import lombok.Data;
